@@ -4,6 +4,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import useConfig from "./config";
 import useNavigation from "./navigation";
 import useViews from "./views";
 
@@ -13,6 +14,9 @@ const App = () => {
 
   const { useRouters } = useNavigation();
   const { AdminRouter } = useRouters();
+
+  const { useInterceptor } = useConfig();
+  useInterceptor();
 
   return (
     <Router>
