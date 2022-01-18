@@ -15,7 +15,8 @@ const useUserReducers = () => {
 
   const user = createReducer(initialStateUser, {
     [LOGIN](state, action) {
-      const { token, nombre, apellido } = action.payload;
+      const { token, usuario } = action.payload;
+      const { nombre, apellido } = usuario;
       return { ...state, token, nombre, apellido };
     },
   });

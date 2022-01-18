@@ -1,8 +1,10 @@
 //Packages
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const useInterceptor = () => {
+  const [showToast, setShowToast] = useState({ message: "", type: "" });
+
   const handleRequestSuccess = (request) => {
     request.headers["Content-Type"] = "application/json";
     return request;
@@ -13,6 +15,12 @@ const useInterceptor = () => {
   };
 
   const handleResponseError = (error) => {
+    if (error.response.status === 400) {
+      setShowToast({
+        message: error.response.data.response.err.message,
+        type: "error",
+      });
+    }
     return Promise.reject(error);
   };
 
@@ -22,7 +30,14 @@ const useInterceptor = () => {
     axios.interceptors.response.use(handleResponseSuccess, handleResponseError);
   }, []);
 
-  return {};
+  const handleHideToast = () => setShowToast({ message: "", type: "" });
+
+  return {
+    showToast: Boolean(showToast.message),
+    handleHideToast,
+    toastMessage: showToast.message,
+    toastType: showToast.type,
+  };
 };
 
 export default useInterceptor;

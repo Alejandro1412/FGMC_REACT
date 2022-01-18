@@ -1,5 +1,7 @@
+import useToasts from "./Toasts";
+
 const useComponents = () => {
-  return {};
+  return { useToasts };
 };
 
 export default useComponents;

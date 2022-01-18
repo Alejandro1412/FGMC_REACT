@@ -1,5 +1,8 @@
+import usePrivateRoute from "./privateRoute";
+import usePublicRoute from "./publicRoute";
+
 const useRoutesHooks = () => {
-  return {};
+  return { usePrivateRoute, usePublicRoute };
 };
 
 export default useRoutesHooks;

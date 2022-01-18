@@ -1,5 +1,6 @@
-import React from "react";
-import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
+import React, { useRef } from "react";
+import { Switch, Redirect, useRouteMatch } from "react-router-dom";
+import useNavigation from "../..";
 import useViews from "../../../views";
 
 const AdminRouter = () => {
@@ -7,14 +8,29 @@ const AdminRouter = () => {
   const { useScreens } = useViews();
   const { AdminDashboard, AdminContracts, AdminDocumentManagment } =
     useScreens();
+  const redirectToHome = useRef("/");
+
+  const { useRoutes } = useNavigation();
+  const { PrivateRoute } = useRoutes();
 
   return (
     <Switch>
-      <Route exact path={path} component={AdminDashboard} />
-      <Route exact path={"/admin/contracts"} component={AdminContracts} />
-      <Route
+      <PrivateRoute
+        exact
+        path={path}
+        component={AdminDashboard}
+        redirect={redirectToHome.current}
+      />
+      <PrivateRoute
+        exact
+        path={"/admin/contracts"}
+        component={AdminContracts}
+        redirect={redirectToHome.current}
+      />
+      <PrivateRoute
         path={"/admin/document-managment"}
         component={AdminDocumentManagment}
+        redirect={redirectToHome.current}
       />
       <Redirect to="/" />
     </Switch>

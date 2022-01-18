@@ -1,7 +1,13 @@
+//Packages
+import { useDispatch } from "react-redux";
+
+//Hooks
 import useAuthActions from "./auth";
 
 const useActions = () => {
-  return { useAuthActions };
+  const dispatch = useDispatch();
+
+  return { dispatch, useAuthActions };
 };
 
 export default useActions;

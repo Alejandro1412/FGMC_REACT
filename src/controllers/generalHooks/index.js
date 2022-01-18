@@ -1,5 +1,7 @@
+import useIsAuth from "./isAuth";
+
 const useGeneralHooks = () => {
-  return {};
+  return { useIsAuth };
 };
 
 export default useGeneralHooks;
