@@ -1,5 +1,8 @@
+import AdminLayout from "./AdminLayout/AdminLayout";
+import ColumnTwoLayout from "./ColumnTwoLayout/ColumnTwoLayout";
+
 const useLayouts = () => {
-  return {};
+  return { AdminLayout, ColumnTwoLayout };
 };
 
 export default useLayouts;
