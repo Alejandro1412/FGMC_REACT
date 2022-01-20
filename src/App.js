@@ -16,7 +16,8 @@ import useViews from "./views";
 const App = () => {
   const { useScreens, useComponents } = useViews();
 
-  const { useToasts } = useComponents();
+  const { useToasts, useLoaders } = useComponents();
+  const { DefaultLoader } = useLoaders();
   const { DefaultToast } = useToasts();
 
   const { Login } = useScreens();
@@ -39,6 +40,7 @@ const App = () => {
           message={toastMessage}
           type={toastType}
         />
+        <DefaultLoader />
         <Router>
           <Switch>
             <Route path="/admin" component={AdminRouter} />
