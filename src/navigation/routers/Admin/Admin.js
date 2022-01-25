@@ -6,8 +6,13 @@ import useViews from "../../../views";
 const AdminRouter = () => {
   const { path } = useRouteMatch();
   const { useScreens } = useViews();
-  const { AdminDashboard, AdminContracts, AdminDocumentManagment } =
-    useScreens();
+  const {
+    AdminDashboard,
+    AdminContracts,
+    AdminDocumentManagment,
+    BatteryIndicator,
+    CorrectiveActions,
+  } = useScreens();
   const redirectToHome = useRef("/");
 
   const { useRoutes } = useNavigation();
@@ -30,6 +35,16 @@ const AdminRouter = () => {
       <PrivateRoute
         path={"/admin/document-managment"}
         component={AdminDocumentManagment}
+        redirect={redirectToHome.current}
+      />
+      <PrivateRoute
+        path={"/admin/battery-indicators"}
+        component={BatteryIndicator}
+        redirect={redirectToHome.current}
+      />
+      <PrivateRoute
+        path={"/admin/corrective-actions"}
+        component={CorrectiveActions}
         redirect={redirectToHome.current}
       />
       <Redirect to="/" />

@@ -8,17 +8,15 @@ import useViews from "../..";
 const AdminLayout = (props) => {
   const { children } = props;
 
-  const { useLayouts } = useViews();
+  const { useLayouts, useComponents } = useViews();
+  const { useSidebars } = useComponents();
+  const { AdminSideBar } = useSidebars();
   const { ColumnTwoLayout } = useLayouts();
   return (
     <ColumnTwoLayout
-      leftPart={
-        <>
-          {" "}
-          <h1>Im the left side</h1>
-        </>
-      }
+      leftPart={<AdminSideBar />}
       rightPart={<main>{children}</main>}
+      className="h-screen"
     />
   );
 };

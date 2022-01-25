@@ -1,14 +1,14 @@
 import React from "react";
 import useViews from "../../..";
 
-const AdminContracts = () => {
+const BatteryIndicator = () => {
   const { useLayouts } = useViews();
   const { AdminLayout } = useLayouts();
   return (
     <AdminLayout>
-      <h1>Contract Screens</h1>
+      <h1>Battery indicator Screen</h1>
     </AdminLayout>
   );
 };
 
-export default AdminContracts;
+export default BatteryIndicator;
