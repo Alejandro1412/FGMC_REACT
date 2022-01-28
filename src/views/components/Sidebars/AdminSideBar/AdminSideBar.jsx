@@ -1,5 +1,9 @@
+//Packages
 import _ from "lodash";
 import React from "react";
+
+//Assets
+import LogoFgmc from "../../../../assets/images/logo.png";
 
 import useControllers from "../../../../controllers";
 
@@ -10,14 +14,18 @@ const AdminSideBar = () => {
   const { menuItems } = useAdminSidebar();
   return (
     <nav className="h-full bg-slate-500 py-4">
+      <img
+        src={LogoFgmc}
+        alt="Fundación gimnasio moderno del cauca"
+        className="w-52 h-52 px-4 mx-auto mb-10"
+      />
       <ul>
         {_.map(menuItems, (item, index) => {
           return (
             <li
               key={`menu-sideBar${index}`}
               onClick={item.onClick}
-              className="text-white px-3 py-4 mb-2 mx-4 cursor-pointer flex items-center justify-center bg-neutral-400 rounded-xl
-               "
+              className="text-white px-3 py-4 mb-2 mx-4 cursor-pointer flex items-center justify-center bg-neutral-400 hover:bg-neutral-700 rounded-xl m-auto"
             >
               {item.title}
             </li>

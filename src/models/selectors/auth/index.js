@@ -8,7 +8,13 @@ const useAuthSelectors = () => {
     (state) => state.user,
     (auth) => auth.token
   );
-  return { authSelector };
+
+  const userSelector = createSelector(
+    (state) => state.user,
+    (user) => user
+  );
+
+  return { authSelector, userSelector };
 };
 
 export default useAuthSelectors;
