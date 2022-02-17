@@ -35,7 +35,7 @@ const AdminLayout = (props) => {
         </>
       }
       className="h-screen"
-      classNameRight="w-full "
+      classNameRight="w-full"
     />
   );
 };

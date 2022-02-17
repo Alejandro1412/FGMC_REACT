@@ -26,8 +26,11 @@ const useAdminSidebar = () => {
       onClick: () => history.push("/admin/contracts"),
     },
   ]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  return { menuItems };
+  const handleOpenCloseMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  return { menuItems, handleOpenCloseMenu, isMenuOpen };
 };
 
 export default useAdminSidebar;
