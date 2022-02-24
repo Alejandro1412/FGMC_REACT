@@ -11,13 +11,16 @@ const useUserReducers = () => {
   const { initialStateUser } = useUserInitialStates();
 
   const { useAuthTypes } = useStrings();
-  const { LOGIN } = useAuthTypes();
+  const { LOGIN, LOGOUT } = useAuthTypes();
 
   const user = createReducer(initialStateUser, {
     [LOGIN](state, action) {
       const { token, usuario } = action.payload;
       const { nombre, apellido } = usuario;
       return { ...state, token, nombre, apellido };
+    },
+    [LOGOUT]() {
+      return initialStateUser;
     },
   });
 

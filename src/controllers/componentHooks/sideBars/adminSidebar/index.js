@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import useApi from "../../../../api";
 
 const useAdminSidebar = () => {
   const history = useHistory();
+
+  const { useActions } = useApi();
+  const { useAuthActions, dispatch } = useActions();
+  const { actLogout } = useAuthActions();
 
   const [menuItems] = useState([
     {
@@ -30,7 +35,9 @@ const useAdminSidebar = () => {
 
   const handleOpenCloseMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  return { menuItems, handleOpenCloseMenu, isMenuOpen };
+  const handleLogoutUser = () => dispatch(actLogout());
+
+  return { menuItems, handleOpenCloseMenu, isMenuOpen, handleLogoutUser };
 };
 
 export default useAdminSidebar;

@@ -7,7 +7,7 @@ const useAuthActions = () => {
   const { login } = useAuthProviders();
 
   const { useAuthTypes } = useStrings();
-  const { LOGIN } = useAuthTypes();
+  const { LOGIN, LOGOUT } = useAuthTypes();
 
   const actLogin =
     ({ email, password }, onSuccess, onError) =>
@@ -21,7 +21,16 @@ const useAuthActions = () => {
       }
     };
 
-  return { actLogin };
+  const actLogout = (onSuccess, onError) => async (dispatch) => {
+    try {
+      dispatch({ type: LOGOUT });
+      onSuccess && onSuccess();
+    } catch (error) {
+      onError && onError();
+    }
+  };
+
+  return { actLogin, actLogout };
 };
 
 export default useAuthActions;

@@ -13,10 +13,11 @@ const AdminSideBar = () => {
   const { useComponentHooks } = useControllers();
   const { useSideBarsControllers } = useComponentHooks();
   const { useAdminSidebar } = useSideBarsControllers();
-  const { menuItems, handleOpenCloseMenu, isMenuOpen } = useAdminSidebar();
+  const { menuItems, handleOpenCloseMenu, isMenuOpen, handleLogoutUser } =
+    useAdminSidebar();
 
   return (
-    <nav className="lg:h-full bg-slate-500 py-4 px-4">
+    <nav className="lg:h-full bg-slate-500 py-4 px-4 relative">
       <div className="flex justify-between items-center">
         <img
           src={LogoFgmc}
@@ -41,6 +42,15 @@ const AdminSideBar = () => {
           );
         })}
       </ul>
+      <p
+        className={`${
+          isMenuOpen && "hidden"
+        } underline font-bold cursor-pointer text-center lg:block lg:absolute lg:bottom-0 lg:py-5`}
+        onClick={handleLogoutUser}
+      >
+        {" "}
+        Cerrar Sesión
+      </p>
     </nav>
   );
 };
