@@ -35,7 +35,7 @@ const AdminSideBar = () => {
             <li
               key={`menu-sideBar${index}`}
               onClick={item.onClick}
-              className="text-white px-3 py-4 mb-2 mx-4 my-6 cursor-pointer text-center bg-neutral-400 hover:bg-neutral-700 rounded-xl"
+              className="text-white px-3 py-4 mb-2 mx-4 my-6 cursor-pointer text-center bg-neutral-400 hover:bg-neutral-700 rounded-xl lg:text-sm"
             >
               {item.title}
             </li>
