@@ -1,6 +1,7 @@
 //Packages
 import _ from "lodash";
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 //Assets
 import LogoFgmc from "../../../../assets/images/logo.png";
@@ -10,6 +11,9 @@ import { BiMenu } from "react-icons/bi";
 import useControllers from "../../../../controllers";
 
 const AdminSideBar = () => {
+  const { pathname } = useLocation();
+  console.log({ pathname });
+
   const { useComponentHooks } = useControllers();
   const { useSideBarsControllers } = useComponentHooks();
   const { useAdminSidebar } = useSideBarsControllers();
@@ -35,7 +39,9 @@ const AdminSideBar = () => {
             <li
               key={`menu-sideBar${index}`}
               onClick={item.onClick}
-              className="text-white px-3 py-4 mb-2 mx-4 my-6 cursor-pointer text-center bg-neutral-400 hover:bg-neutral-700 rounded-xl lg:text-sm"
+              className={`text-white px-3 py-4 mb-2 mx-4 my-6 cursor-pointer text-center bg-neutral-400 hover:bg-neutral-700 rounded-xl lg:text-sm ${
+                pathname === item.route && "bg-neutral-700"
+              }`}
             >
               {item.title}
             </li>

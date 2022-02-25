@@ -13,22 +13,27 @@ const useAdminSidebar = () => {
     {
       title: "Inicio",
       onClick: () => history.push("/admin"),
+      route: "/admin",
     },
     {
       title: "Gestion documental",
       onClick: () => history.push("/admin/document-managment"),
+      route: "/admin/document-managment",
     },
     {
       title: "Contratacion institucional",
       onClick: () => history.push("/admin/contracts"),
+      route: "/admin/contracts",
     },
     {
       title: "Bateria de indicadores",
       onClick: () => history.push("/admin/battery-indicators"),
+      route: "/admin/battery-indicators",
     },
     {
       title: "Acciones correctivas",
-      onClick: () => history.push("/admin/contracts"),
+      onClick: () => history.push("/admin/corrective-actions"),
+      route: "/admin/corrective-actions",
     },
   ]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
