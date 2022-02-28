@@ -5,7 +5,7 @@ const DefaultHeader = (props) => {
   const { name, className } = props;
 
   return (
-    <header className={`px-5 w-full flex flex-row-reverse ${className}`}>
+    <header className={`px-5 w-full flex flex-row-reverse ${className} h-7`}>
       <h3 className="font-bold">
         Hola, <span className="underline uppercase">{name}</span>
       </h3>

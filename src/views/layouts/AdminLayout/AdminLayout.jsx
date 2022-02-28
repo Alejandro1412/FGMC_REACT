@@ -27,8 +27,8 @@ const AdminLayout = (props) => {
       rightPart={
         <>
           <DefaultHeader name={`${nombre} ${apellido}`} />
-          <main className="h-screen flex justify-center items-center">
-            <section className="rounded shadow-lg w-3/4 max-w-7xl bg-cover py-10 px-10">
+          <main id="mainSection" className="flex justify-center items-center">
+            <section className="max-h-full rounded shadow-lg w-3/4 max-w-7xl bg-cover py-10 px-10 overflow-auto">
               {children}
             </section>
           </main>
