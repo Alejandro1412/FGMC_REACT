@@ -12,7 +12,6 @@ import useControllers from "../../../../controllers";
 
 const AdminSideBar = () => {
   const { pathname } = useLocation();
-  console.log({ pathname });
 
   const { useComponentHooks } = useControllers();
   const { useSideBarsControllers } = useComponentHooks();
