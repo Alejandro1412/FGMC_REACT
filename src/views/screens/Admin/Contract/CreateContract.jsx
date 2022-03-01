@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useMemo } from "react";
 import _ from "lodash";
-import { useForm } from "react-hook-form";
 import { City } from "country-state-city";
 
 //UI Componentes
@@ -21,8 +20,6 @@ import { StyledForm, StyledTwoColumns } from "../../../../styles/form.styles";
 
 const CreateContract = (props) => {
   const { handleChangeScreen } = props;
-
-  const { register } = useForm();
 
   const [citiesOfColombian, setCitiesOfColombian] = useState();
 
