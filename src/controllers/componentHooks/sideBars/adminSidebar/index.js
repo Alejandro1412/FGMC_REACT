@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+
+//Hooks
 import useApi from "../../../../api";
 
 const useAdminSidebar = () => {
   const history = useHistory();
+  const { pathname } = useLocation();
 
   const { useActions } = useApi();
   const { useAuthActions, dispatch } = useActions();
@@ -38,11 +42,22 @@ const useAdminSidebar = () => {
   ]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  useEffect(() => {
+    if (pathname) {
+      setIsMenuOpen(true);
+    }
+  }, [pathname]);
+
   const handleOpenCloseMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleLogoutUser = () => dispatch(actLogout());
 
-  return { menuItems, handleOpenCloseMenu, isMenuOpen, handleLogoutUser };
+  return {
+    menuItems,
+    handleOpenCloseMenu,
+    isMenuOpen,
+    handleLogoutUser,
+  };
 };
 
 export default useAdminSidebar;

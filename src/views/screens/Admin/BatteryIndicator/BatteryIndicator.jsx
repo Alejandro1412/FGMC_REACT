@@ -6,7 +6,10 @@ const BatteryIndicator = () => {
   const { AdminLayout } = useLayouts();
   return (
     <AdminLayout>
-      <h1>Battery indicator Screen</h1>
+      <h2 className="text-center font-bold text-2xl">
+        {" "}
+        Bateria de indicadores{" "}
+      </h2>
     </AdminLayout>
   );
 };

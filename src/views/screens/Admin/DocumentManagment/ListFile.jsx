@@ -42,7 +42,7 @@ const ListFile = (props) => {
           _.map(dataFake.current, (file, index) => {
             return (
               <div
-                className="shadow-2xl rounded-md w-1/2 bg-gray-400 uppercase m-auto flex justify-between px-4"
+                className="shadow-2xl rounded-md w-full lg:w-1/2 bg-gray-400 uppercase m-auto flex justify-between px-4"
                 key={`fileItem-${index}`}
               >
                 <p className="px-4 underline font-semibold"> {file.name} </p>
