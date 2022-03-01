@@ -38,6 +38,8 @@ const ListContract = (props) => {
         Crear Contrato
       </Button>
 
+      <h2 className="text-center font-bold text-2xl"> Contratos </h2>
+
       <TableContainer component={Paper} className="mt-10">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
