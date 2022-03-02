@@ -20,3 +20,17 @@ export const StyledTwoColumns = styled.section.attrs(() => ({
     ${tw` w-full `}
   }
 `;
+
+export const StyledDate = styled.div.attrs(() => ({
+  className: "StyledForm",
+}))`
+  ${tw` w-full`}
+
+  label {
+    ${tw` static mt-0 `}
+  }
+
+  .MuiInput-root {
+    ${(props) => props.hasValue && tw`mt-0`}
+  }
+`;
