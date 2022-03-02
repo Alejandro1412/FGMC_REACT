@@ -15,12 +15,20 @@ const CorrectiveActions = () => {
 
   return (
     <AdminLayout>
-      {screenActive === 0 && (
-        <ListOfCorrectiveActions handleChangeScreen={setScreenActive} />
-      )}
-      {screenActive === 1 && (
-        <CreateCorrectiveActions handleChangeScreen={setScreenActive} />
-      )}
+      <>
+        {screenActive === 0 && (
+          <ListOfCorrectiveActions
+            handleChangeScreen={setScreenActive}
+            screenActive={screenActive}
+          />
+        )}
+        {screenActive === 1 && (
+          <CreateCorrectiveActions
+            handleChangeScreen={setScreenActive}
+            screenActive={screenActive}
+          />
+        )}
+      </>
     </AdminLayout>
   );
 };

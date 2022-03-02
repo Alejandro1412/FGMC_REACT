@@ -1,9 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import useStrings from "../../../../strings";
+import { Controller } from "react-hook-form";
 
 //Icons/Assets
 import { BiArrowBack } from "react-icons/bi";
@@ -21,33 +18,28 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
+import FormHelperText from "@mui/material/FormHelperText";
 import { Button } from "@mui/material";
 
+//Hooks
+import useControllers from "../../../../controllers";
+
 const CreateCorrectiveActions = (props) => {
-  const { handleChangeScreen } = props;
+  const { handleChangeScreen, screenActive } = props;
 
-  const { useMessagesTypes } = useStrings();
-  const { useFormsTypes } = useMessagesTypes();
-  const { REQUIRED_FIELD } = useFormsTypes();
-
-  const createCorrectiveActionSchema = yup
-    .object({
-      date: yup
-        .date()
-        .required(REQUIRED_FIELD)
-        .transform((curr, orig) => (orig === "" ? null : curr))
-        .nullable(),
-    })
-    .required();
-
+  const { useScreenHooks } = useControllers();
+  const { useAdminControllers } = useScreenHooks();
+  const { useAdminCorrectiveActionsController } = useAdminControllers();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    errors,
     watch,
-  } = useForm({
-    mode: "onChange",
-    resolver: yupResolver(createCorrectiveActionSchema),
+    control,
+    handleRegisterCorrectiveActions,
+  } = useAdminCorrectiveActionsController({
+    screenActive,
+    handleChangeScreen,
   });
 
   return (
@@ -65,42 +57,72 @@ const CreateCorrectiveActions = (props) => {
       </h2>
 
       <StyledForm>
-        <FormControl variant="standard" fullWidth>
-          <InputLabel id="demo-simple-select-standard-label">
-            {" "}
-            Selecciona el responsable
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            //   value={age}
-            //   onChange={handleChange}
-            label="Tipo de contrato"
-          >
-            <MenuItem value="alta">Alejandro</MenuItem>
-            <MenuItem value="media">Luisa</MenuItem>
-            <MenuItem value="baja">Andres</MenuItem>
-            <MenuItem value="baja2">Daniela</MenuItem>
-            <MenuItem value="baja3">Manuela</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl variant="standard" fullWidth>
-          <InputLabel id="demo-simple-select-standard-label">
-            {" "}
-            Selecciona la gravedad
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            //   value={age}
-            //   onChange={handleChange}
-            label="Tipo de contrato"
-          >
-            <MenuItem value="alta">Alta</MenuItem>
-            <MenuItem value="media">Media</MenuItem>
-            <MenuItem value="baja">Baja</MenuItem>
-          </Select>
-        </FormControl>
+        <Controller
+          control={control}
+          name="responsable"
+          render={({ field: { onChange, value, name } }) => {
+            return (
+              <FormControl
+                variant="standard"
+                fullWidth
+                error={errors["responsable"]?.message}
+              >
+                <InputLabel id="demo-simple-select-standard-label">
+                  {" "}
+                  Selecciona el responsable
+                </InputLabel>
+                <Select
+                  name={name}
+                  labelId="demo-simple-select-standard-label"
+                  id="demo-simple-select-standard"
+                  label="Tipo de contrato"
+                  value={value}
+                  onChange={onChange}
+                >
+                  <MenuItem value="alejandro">Alejandro</MenuItem>
+                  <MenuItem value="luisa">Luisa</MenuItem>
+                  <MenuItem value="andres">Andres</MenuItem>
+                  <MenuItem value="daniela">Daniela</MenuItem>
+                  <MenuItem value="manuela">Manuela</MenuItem>
+                </Select>
+                <FormHelperText>
+                  {errors["responsable"]?.message}
+                </FormHelperText>
+              </FormControl>
+            );
+          }}
+        />
+
+        <Controller
+          control={control}
+          name="gravedad"
+          render={({ field: { onChange, value, name } }) => {
+            return (
+              <FormControl
+                variant="standard"
+                fullWidth
+                error={errors["gravedad"]?.message}
+              >
+                <InputLabel id="demo-simple-select-standard-label">
+                  {" "}
+                  Selecciona el responsable
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-standard-label"
+                  id="demo-simple-select-standard"
+                  label="Tipo de contrato"
+                  value={value}
+                  onChange={onChange}
+                >
+                  <MenuItem value="alta">Alta</MenuItem>
+                  <MenuItem value="media">Media</MenuItem>
+                  <MenuItem value="baja">Baja</MenuItem>
+                </Select>
+                <FormHelperText>{errors["gravedad"]?.message}</FormHelperText>
+              </FormControl>
+            );
+          }}
+        />
 
         <StyledTwoColumns>
           <TextField
@@ -108,24 +130,24 @@ const CreateCorrectiveActions = (props) => {
             label="Describe el problema"
             variant="outlined"
             className="block w-full"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
+            error={errors?.["descripcionProblema"]?.message}
+            helperText={errors?.["descripcionProblema"]?.message}
             required
             multiline
             rows={4}
-            // {...register("email")}
+            {...register("descripcionProblema")}
           />
           <TextField
             id="outlined-basic"
             label="Describe la accion de mejora"
             variant="outlined"
             className="block w-full"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
+            error={errors?.["descripcionMejora"]?.message}
+            helperText={errors?.["descripcionMejora"]?.message}
             required
             multiline
             rows={4}
-            // {...register("email")}
+            {...register("descripcionMejora")}
           />
         </StyledTwoColumns>
 
@@ -136,19 +158,18 @@ const CreateCorrectiveActions = (props) => {
             variant="standard"
             className="w-full"
             type="date"
-            error={errors["date"]?.message}
-            helperText={errors["date"]?.message}
+            error={errors?.["fechaSolucion"]?.message}
+            helperText={errors?.["fechaSolucion"]?.message}
             required
-            {...register("date")}
+            {...register("fechaSolucion")}
           />
         </StyledDate>
 
         <Button
           variant="contained"
           className="w-40"
-          onClick={handleSubmit(() => {})}
+          onClick={handleSubmit(handleRegisterCorrectiveActions)}
         >
-          {" "}
           Crear accion correctiva
         </Button>
       </StyledForm>
@@ -158,6 +179,7 @@ const CreateCorrectiveActions = (props) => {
 
 CreateCorrectiveActions.propTypes = {
   handleChangeScreen: PropTypes.func.isRequired,
+  screenActive: PropTypes.number.isRequired,
 };
 
 export default CreateCorrectiveActions;

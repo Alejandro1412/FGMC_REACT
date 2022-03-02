@@ -1,14 +1,27 @@
 import _ from "lodash";
 import { useEffect, useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import dayjs from "dayjs";
 
 //Hooks
 import useApi from "../../../../api";
+import useStrings from "../../../../strings";
+import useHelpers from "../../../../helpers";
 
-const useAdminCorrectiveActionsController = () => {
+const useAdminCorrectiveActionsController = ({
+  screenActive = 0,
+  handleChangeScreen,
+} = {}) => {
   const { useActions } = useApi();
   const { dispatch, useAdminActions } = useActions();
   const { useAdminCorrectiveActions } = useAdminActions();
-  const { actGetCorrectiveActions } = useAdminCorrectiveActions();
+  const { actGetCorrectiveActions, actCreateCorrectiveAction } =
+    useAdminCorrectiveActions();
+
+  const { useQuickFunctions } = useHelpers();
+  const { getYearMonthDayFromDate } = useQuickFunctions();
 
   const [optionsCorrectiveActions, setOptionsCorrectiveActions] = useState([]);
 
@@ -47,12 +60,43 @@ const useAdminCorrectiveActionsController = () => {
     },
   ];
 
+  const { useMessagesTypes } = useStrings();
+  const { useFormsTypes } = useMessagesTypes();
+  const { REQUIRED_FIELD } = useFormsTypes();
+
+  const createCorrectiveActionSchema = yup
+    .object({
+      fechaSolucion: yup
+        .date()
+        .required(REQUIRED_FIELD)
+        .transform((curr, orig) => (orig === "" ? null : curr))
+        .nullable(),
+      descripcionProblema: yup.string().required(REQUIRED_FIELD),
+      descripcionMejora: yup.string().required(REQUIRED_FIELD),
+      responsable: yup.string().required(REQUIRED_FIELD),
+      gravedad: yup.string().required(REQUIRED_FIELD),
+    })
+    .required();
+
+  const {
+    handleSubmit,
+    formState: { errors },
+    watch,
+    control,
+    register,
+  } = useForm({
+    mode: "onChange",
+    resolver: yupResolver(createCorrectiveActionSchema),
+  });
+
   useEffect(() => {
-    dispatch(
-      actGetCorrectiveActions(({ listCorrectiveActions }) => {
-        setOptionsCorrectiveActions(listCorrectiveActions.docs);
-      })
-    );
+    if (screenActive === 0) {
+      dispatch(
+        actGetCorrectiveActions(({ listCorrectiveActions }) => {
+          setOptionsCorrectiveActions(listCorrectiveActions.docs);
+        })
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -92,6 +136,36 @@ const useAdminCorrectiveActionsController = () => {
     setPage(0);
   };
 
+  const handleRegisterCorrectiveActions = (data) => {
+    const {
+      responsable,
+      gravedad,
+      descripcionProblema,
+      descripcionMejora,
+      fechaSolucion,
+    } = data;
+
+    const fechaSolucionAux = getYearMonthDayFromDate({
+      dateInString: fechaSolucion,
+      format: "ymd",
+    });
+
+    dispatch(
+      actCreateCorrectiveAction(
+        {
+          responsable,
+          gravedad,
+          descripcionProblema,
+          descripcionMejora,
+          fechaSolucion: fechaSolucionAux,
+        },
+        () => {
+          handleChangeScreen(0);
+        }
+      )
+    );
+  };
+
   return {
     optionsCorrectiveActionsColumns,
     optionsCorrectiveActionsRows,
@@ -99,6 +173,14 @@ const useAdminCorrectiveActionsController = () => {
     rowsPerPage,
     handleChangePage,
     handleChangeRowsPerPage,
+    handleRegisterCorrectiveActions,
+
+    //react hook form
+    register,
+    handleSubmit,
+    errors,
+    watch,
+    control,
   };
 };
 
