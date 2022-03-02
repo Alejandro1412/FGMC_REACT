@@ -16,7 +16,11 @@ import Button from "@mui/material/Button";
 import { BiArrowBack } from "react-icons/bi";
 
 //Styles
-import { StyledForm, StyledTwoColumns } from "../../../../styles/form.styles";
+import {
+  StyledDate,
+  StyledForm,
+  StyledTwoColumns,
+} from "../../../../styles/form.styles";
 
 const CreateContract = (props) => {
   const { handleChangeScreen } = props;
@@ -88,18 +92,19 @@ const CreateContract = (props) => {
             </Select>
           </FormControl>
 
-          <TextField
-            id="outlined-basic"
-            label="Fecha de expedicion"
-            variant="standard"
-            className="block w-full"
-            type="date"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
-            required
-
-            // {...register("email")}
-          />
+          <StyledDate>
+            <TextField
+              id="outlined-basic"
+              label="Fecha de expedicion"
+              variant="standard"
+              className="block w-full"
+              type="date"
+              // error={errors["email"]?.message}
+              // helperText={errors["email"]?.message}
+              required
+              // {...register("email")}
+            />
+          </StyledDate>
         </StyledTwoColumns>
 
         <StyledTwoColumns>
@@ -135,29 +140,32 @@ const CreateContract = (props) => {
           // {...register("email")}
         />
         <StyledTwoColumns disabledTransition>
-          <TextField
-            id="outlined-basic"
-            label="Fecha de ingreso"
-            variant="standard"
-            className="block w-full"
-            type="date"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
-            required
-
-            // {...register("email")}
-          />
-          <TextField
-            id="outlined-basic"
-            label="Fecha de retiro"
-            variant="standard"
-            className="block w-full"
-            type="date"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
-            required
-            // {...register("email")}
-          />
+          <StyledDate>
+            <TextField
+              id="outlined-basic"
+              label="Fecha de ingreso"
+              variant="standard"
+              className="block w-full"
+              type="date"
+              // error={errors["email"]?.message}
+              // helperText={errors["email"]?.message}
+              required
+              // {...register("email")}
+            />
+          </StyledDate>
+          <StyledDate>
+            <TextField
+              id="outlined-basic"
+              label="Fecha de retiro"
+              variant="standard"
+              className="block w-full"
+              type="date"
+              // error={errors["email"]?.message}
+              // helperText={errors["email"]?.message}
+              required
+              // {...register("email")}
+            />
+          </StyledDate>
         </StyledTwoColumns>
         <StyledTwoColumns>
           <TextField
@@ -277,10 +285,6 @@ const CreateContract = (props) => {
         <Button variant="contained" className="w-40">
           {" "}
           Crear
-        </Button>
-        <Button variant="contained" className="w-90">
-          {" "}
-          Imprimir Pdf
         </Button>
       </StyledForm>
     </>
