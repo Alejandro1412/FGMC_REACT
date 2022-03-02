@@ -278,6 +278,10 @@ const CreateContract = (props) => {
           {" "}
           Crear
         </Button>
+        <Button variant="contained" className="w-90">
+          {" "}
+          Imprimir Pdf
+        </Button>
       </StyledForm>
     </>
   );

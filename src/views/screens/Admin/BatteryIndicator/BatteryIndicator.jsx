@@ -12,8 +12,10 @@ import { StyledChart } from "./BatteryIndicator.styles";
 
 const data = [
   ["Task", "Hours per Day"],
-  ["Activos", 11],
-  ["Inactivos", 2],
+  ["Especialización", 36],
+  ["Maestria", 20],
+  ["Pregrado", 179],
+  ["Desconocidos", 15],
 ];
 
 const options = {
@@ -22,11 +24,11 @@ const options = {
 };
 
 const data2 = [
-  ["Element", "Density", { role: "style" }],
-  ["Copper", 8.94, "#b87333"], // RGB value
-  ["Silver", 10.49, "silver"], // English color name
-  ["Gold", 19.3, "gold"],
-  ["Platinum", 21.45, "color: #e5e4e2"], // CSS-style declaration
+  ["Element", "Total", { role: "style" }],
+  ["Profesional", 209, "#b87333"], // RGB value
+  ["Tecnólogo", 73, "silver"], // English color name
+  ["Técnico", 38, "gold"],
+  ["No continuaron estudios", 11, "color: #e5e4e2"], // CSS-style declaration
 ];
 
 const BatteryIndicator = () => {

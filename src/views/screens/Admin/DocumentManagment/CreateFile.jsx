@@ -42,7 +42,7 @@ const CreateFile = (props) => {
         <UploadFiles className="w-full lg:w-1/2" />
         <Button variant="contained" className="w-40">
           {" "}
-          Crear Documento
+          Cargar Documento
         </Button>
       </StyledForm>
     </>
