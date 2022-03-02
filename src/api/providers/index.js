@@ -1,7 +1,8 @@
+import useAdminProviders from "./admin";
 import useAuthProviders from "./auth";
 
 const useProviders = () => {
-  return { useAuthProviders };
+  return { useAuthProviders, useAdminProviders };
 };
 
 export default useProviders;
