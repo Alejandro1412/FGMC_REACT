@@ -50,8 +50,6 @@ const CreateCorrectiveActions = (props) => {
     resolver: yupResolver(createCorrectiveActionSchema),
   });
 
-  console.log({ errors });
-
   return (
     <>
       <BiArrowBack
@@ -148,9 +146,7 @@ const CreateCorrectiveActions = (props) => {
         <Button
           variant="contained"
           className="w-40"
-          onClick={handleSubmit((data) => {
-            console.log({ data });
-          })}
+          onClick={handleSubmit(() => {})}
         >
           {" "}
           Crear accion correctiva
