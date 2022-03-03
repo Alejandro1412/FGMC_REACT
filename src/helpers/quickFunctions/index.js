@@ -1,4 +1,9 @@
+import useStrings from "../../strings";
+
 const useQuickFunctions = () => {
+  const { useConstants } = useStrings();
+  const { ONE_DAY_IN_MILLISECONDS } = useConstants();
+
   const addZeroToBeginning = (numberInString) => {
     return numberInString.padStart(2, "0");
   };
@@ -30,7 +35,19 @@ const useQuickFunctions = () => {
     return seletcFormatDate[format];
   };
 
-  return { getYearMonthDayFromDate };
+  const daysToDateExpired = ({ selectedDate }) => {
+    const todayDate = new Date();
+    const todayDateInMillisenconds = todayDate.setHours(0, 0, 0, 0);
+
+    const selectedDateInMilliseconds = selectedDate.getTime();
+
+    return (
+      (selectedDateInMilliseconds - todayDateInMillisenconds) /
+      ONE_DAY_IN_MILLISECONDS
+    );
+  };
+
+  return { getYearMonthDayFromDate, daysToDateExpired };
 };
 
 export default useQuickFunctions;
