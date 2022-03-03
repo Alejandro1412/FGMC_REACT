@@ -111,13 +111,15 @@ const useAdminCorrectiveActionsController = ({
           fechaSolucion,
           gravedad,
         } = correctiveA;
+        const dateInJs = new Date(fechaSolucion);
+        const dayFormated = dayjs(dateInJs);
         return {
           id: _id,
           gravedad,
           descripcionProblema,
           descripcionMejora,
           responsable,
-          fechaSolucion,
+          fechaSolucion: dayFormated.format("MMM DD YYYY"),
         };
       });
 

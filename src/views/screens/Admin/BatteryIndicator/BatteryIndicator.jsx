@@ -6,6 +6,7 @@ import { Chart } from "react-google-charts";
 
 //Hooks
 import useViews from "../../..";
+import useControllers from "../../../../controllers";
 
 //Styles
 import { StyledChart } from "./BatteryIndicator.styles";
@@ -34,6 +35,13 @@ const data2 = [
 const BatteryIndicator = () => {
   const { useLayouts } = useViews();
   const { AdminLayout } = useLayouts();
+
+  const { useScreenHooks } = useControllers();
+  const { useAdminControllers } = useScreenHooks();
+  const { useBatteryIndicators } = useAdminControllers();
+  const { dataCorrectiveActions, optionsChartCorrectiveActions } =
+    useBatteryIndicators();
+
   return (
     <AdminLayout>
       <h2 className="text-center font-bold text-2xl">
@@ -42,6 +50,14 @@ const BatteryIndicator = () => {
       </h2>
 
       <StyledChart>
+        <Chart
+          chartType="PieChart"
+          width="100%"
+          height="400px"
+          data={dataCorrectiveActions}
+          options={optionsChartCorrectiveActions}
+        />
+
         <Chart
           chartType="PieChart"
           data={data}
