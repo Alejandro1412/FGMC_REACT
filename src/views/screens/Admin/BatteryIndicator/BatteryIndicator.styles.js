@@ -10,3 +10,15 @@ export const StyledChart = styled.section.attrs(() => ({
     ${tw`text-white`}
   }
 `;
+
+export const StyledAccordeon = styled.section.attrs(() => ({
+  className: "StyledAccordeon",
+}))`
+  .itemAccordion {
+    ${tw`w-96 h-96 h-full mx-auto `}
+
+    div {
+      // ${tw`flex justify-center items-center w-full`}
+    }
+  }
+`;
