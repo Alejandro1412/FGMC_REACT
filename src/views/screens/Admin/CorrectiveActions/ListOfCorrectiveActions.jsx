@@ -39,7 +39,7 @@ const ListOfCorrectiveActions = (props) => {
           handleChangeScreen(1);
         }}
       >
-        Crear Contrato
+        Crear acción correctiva
       </Button>
 
       <h2 className="text-center font-bold text-2xl"> Acciones correctivas </h2>
