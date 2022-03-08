@@ -29,7 +29,7 @@ const App = () => {
   const { useInterceptor, useRedux } = useConfig();
   const { store, persistor } = useRedux();
   const { showToast, handleHideToast, toastMessage, toastType } =
-    useInterceptor();
+    useInterceptor({ store });
 
   return (
     <Provider store={store}>

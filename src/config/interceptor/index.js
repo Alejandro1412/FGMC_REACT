@@ -2,11 +2,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const useInterceptor = () => {
+const useInterceptor = ({ store }) => {
   const [showToast, setShowToast] = useState({ message: "", type: "" });
 
   const handleRequestSuccess = (request) => {
+    const state = store.getState();
+    const { token } = state.user;
+
     request.headers["Content-Type"] = "application/json";
+    request.headers.token = token;
     return request;
   };
 

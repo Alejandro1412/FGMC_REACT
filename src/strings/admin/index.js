@@ -1,7 +1,8 @@
 import useAdminCorrectiveActionsTypes from "./correctiveActions";
+import useAdminContractsTypes from "./createContract";
 
 const useAdminTypes = () => {
-  return { useAdminCorrectiveActionsTypes };
+  return { useAdminCorrectiveActionsTypes, useAdminContractsTypes };
 };
 
 export default useAdminTypes;

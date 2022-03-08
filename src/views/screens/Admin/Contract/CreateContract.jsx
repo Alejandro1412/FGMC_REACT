@@ -21,6 +21,7 @@ import {
   StyledForm,
   StyledTwoColumns,
 } from "../../../../styles/form.styles";
+import useControllers from "../../../../controllers";
 
 const CreateContract = (props) => {
   const { handleChangeScreen } = props;
@@ -39,6 +40,11 @@ const CreateContract = (props) => {
       })),
     [citiesOfColombian]
   );
+
+  const { useScreenHooks } = useControllers();
+  const { useAdminControllers } = useScreenHooks();
+  const { useContracts } = useAdminControllers();
+  const { handleCreateContract } = useContracts();
 
   return (
     <>
@@ -282,7 +288,11 @@ const CreateContract = (props) => {
           rows={4}
           // {...register("email")}
         />
-        <Button variant="contained" className="w-40">
+        <Button
+          variant="contained"
+          className="w-40"
+          onClick={handleCreateContract}
+        >
           {" "}
           Crear
         </Button>
