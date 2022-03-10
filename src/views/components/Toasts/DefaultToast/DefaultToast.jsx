@@ -1,23 +1,27 @@
 //Packages
 import React, { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import PropTypes from "prop-types";
 //Styles toast
 import "react-toastify/dist/ReactToastify.css";
 
 //Hooks
-import useInterceptor from "../../../../config/interceptor";
+import useApi from "../../../../api";
+import useModels from "../../../../models";
 
-const DefaultToast = (props) => {
-  const { store } = props;
+const DefaultToast = () => {
+  const { useActions } = useApi();
+  const { dispatch, useGeneralActions } = useActions();
+  const { actHideGeneralToast } = useGeneralActions();
 
-  const { showToast, handleHideToast, toastMessage, toastType } =
-    useInterceptor({
-      store,
-    });
+  const { useSelectors } = useModels();
+  const { useSelector, useGeneralSelectors } = useSelectors();
+  const { generalToastSelector } = useGeneralSelectors();
+  const dataToast = useSelector(generalToastSelector);
+
+  const handleHideToast = () => dispatch(actHideGeneralToast());
 
   const notify = () => {
-    toast[toastType](toastMessage, {
+    toast[dataToast.typeMessage](dataToast.message, {
       onClose: () => handleHideToast(),
       position: "top-center",
       autoClose: 5000,
@@ -30,28 +34,13 @@ const DefaultToast = (props) => {
   };
 
   useEffect(() => {
-    if (showToast) {
+    if (dataToast.state) {
       notify();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showToast]);
+  }, [dataToast.state]);
 
   return <ToastContainer></ToastContainer>;
-};
-
-DefaultToast.propTypes = {
-  showToast: PropTypes.bool,
-  handleHideToast: PropTypes.func,
-  type: PropTypes.oneOf(["success", "error"]),
-  message: PropTypes.string,
-  store: PropTypes.object.isRequired,
-};
-
-DefaultToast.defaultProps = {
-  showToast: false,
-  handleHideToast: () => {},
-  type: "error",
-  message: "",
 };
 
 export default DefaultToast;

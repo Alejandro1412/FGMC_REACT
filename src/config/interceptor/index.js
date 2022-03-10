@@ -1,12 +1,11 @@
 //Packages
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useStrings from "../../strings";
 
-const useInterceptor = ({ store }) => {
-  const [showToast, setShowToast] = useState({ message: "", type: "" });
-
-  const { useAuthTypes } = useStrings();
+const useInterceptor = (store) => {
+  const { useAuthTypes, useGeneralTypes } = useStrings();
+  const { SHOW_TOAST } = useGeneralTypes();
   const { LOGOUT } = useAuthTypes();
 
   const handleRequestSuccess = (request) => {
@@ -14,28 +13,48 @@ const useInterceptor = ({ store }) => {
     const { token } = state.user;
 
     request.headers["Content-Type"] = "application/json";
-    request.headers.token = token;
+    if (token) {
+      request.headers["token"] = token;
+    }
     return request;
   };
 
   const handleResponseSuccess = (response) => {
+    if (response.status === 201) {
+      store.dispatch({
+        type: SHOW_TOAST,
+        payload: {
+          state: true,
+          message: response.data.response.description,
+          typeMessage: "success",
+        },
+      });
+    }
     return response;
   };
 
   const handleResponseError = (error) => {
     if (error.response.status === 400) {
-      setShowToast({
-        message: error.response.data.response.err.message,
-        type: "error",
+      store.dispatch({
+        type: SHOW_TOAST,
+        payload: {
+          state: true,
+          message: error.response.data.response.err.message,
+          typeMessage: "error",
+        },
       });
     }
 
     if (error.response.status === 401) {
       store.dispatch({ type: LOGOUT });
 
-      setShowToast({
-        message: "Sesión caducada",
-        type: "error",
+      store.dispatch({
+        type: SHOW_TOAST,
+        payload: {
+          status: true,
+          message: "Sesión caducada",
+          typeMessage: "error",
+        },
       });
     }
     return Promise.reject(error);
@@ -47,15 +66,6 @@ const useInterceptor = ({ store }) => {
     axios.interceptors.response.use(handleResponseSuccess, handleResponseError);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleHideToast = () => setShowToast({ message: "", type: "" });
-
-  return {
-    showToast: Boolean(showToast.message),
-    handleHideToast,
-    toastMessage: showToast.message,
-    toastType: showToast.type,
-  };
 };
 
 export default useInterceptor;

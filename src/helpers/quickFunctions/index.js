@@ -30,6 +30,11 @@ const useQuickFunctions = () => {
       })}-${formatDayWithTwoDigits({
         day: dateAux.getUTCDate(),
       })}`,
+      dmy2: `${formatDayWithTwoDigits({
+        day: dateAux.getUTCDate(),
+      })}-${formatMonthWithTwoDigits({
+        month: dateAux.getUTCMonth(),
+      })}-${dateAux.getUTCFullYear()}`,
     };
 
     return seletcFormatDate[format];

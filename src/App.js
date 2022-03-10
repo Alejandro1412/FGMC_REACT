@@ -26,13 +26,14 @@ const App = () => {
   const { PublicRoute } = useRoutes();
   const { AdminRouter } = useRouters();
 
-  const { useRedux } = useConfig();
+  const { useRedux, useInterceptor } = useConfig();
   const { store, persistor } = useRedux();
+  useInterceptor(store);
 
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
-        <DefaultToast store={store} />
+        <DefaultToast />
         <DefaultLoader />
         <Router>
           <Switch>

@@ -1,8 +1,9 @@
 //Hooks
+import useGeneralInitialStates from "./general";
 import useUserInitialStates from "./user";
 
 const useInitialStates = () => {
-  return { useUserInitialStates };
+  return { useUserInitialStates, useGeneralInitialStates };
 };
 
 export default useInitialStates;

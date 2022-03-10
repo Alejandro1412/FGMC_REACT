@@ -46,8 +46,9 @@ const CreateContract = (props) => {
   const { useScreenHooks } = useControllers();
   const { useAdminControllers } = useScreenHooks();
   const { useContracts } = useAdminControllers();
-  const { handleCreateContract, register, handleSubmit, errors } =
-    useContracts();
+  const { handleCreateContract, register, handleSubmit, errors } = useContracts(
+    { handleChangeScreen }
+  );
 
   return (
     <>
@@ -60,7 +61,7 @@ const CreateContract = (props) => {
 
       <h2 className="text-center font-bold text-2xl"> Crear contrato </h2>
 
-      <StyledForm onSubmit={handleSubmit(handleCreateContract)}>
+      <StyledForm>
         <FormControl
           variant="standard"
           fullWidth
@@ -85,7 +86,11 @@ const CreateContract = (props) => {
         </FormControl>
 
         <StyledTwoColumns disabledTransition>
-          <FormControl variant="standard" fullWidth>
+          <FormControl
+            variant="standard"
+            fullWidth
+            error={errors["lugarExpedicion"]?.message}
+          >
             <InputLabel id="demo-simple-select-standard-label">
               {" "}
               Selecciona el lugar de expedicion
@@ -93,28 +98,34 @@ const CreateContract = (props) => {
             <Select
               labelId="demo-simple-select-standard-label"
               id="demo-simple-select-standard"
-              //   value={age}
-              //   onChange={handleChange}
+              {...register("lugarExpedicion")}
               label="Lugar de expeidicion"
               className="w-full"
             >
-              {_.map(optionsCitiesOfColombia, (city) => {
-                return <MenuItem value={city.value}>{city.label}</MenuItem>;
+              {_.map(optionsCitiesOfColombia, (city, idx) => {
+                return (
+                  <MenuItem value={city.value} key={`cities-${idx}`}>
+                    {city.label}
+                  </MenuItem>
+                );
               })}
             </Select>
+            <FormHelperText>
+              {errors["lugarExpedicion"]?.message}
+            </FormHelperText>
           </FormControl>
 
           <StyledDate>
             <TextField
               id="outlined-basic"
-              label="Fecha de expedicion"
+              label="Fecha de nacimiento"
               variant="standard"
               className="block w-full"
               type="date"
-              // error={errors["email"]?.message}
-              // helperText={errors["email"]?.message}
+              error={errors["fechaNacimiento"]?.message}
+              helperText={errors["fechaNacimiento"]?.message}
               required
-              // {...register("email")}
+              {...register("fechaNacimiento")}
             />
           </StyledDate>
         </StyledTwoColumns>
@@ -125,20 +136,20 @@ const CreateContract = (props) => {
             label="Caja de compensasion"
             variant="outlined"
             className="block w-full"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
+            error={errors["CajaCompensacion"]?.message}
+            helperText={errors["CajaCompensacion"]?.message}
             required
-            // {...register("email")}
+            {...register("CajaCompensacion")}
           />
           <TextField
             id="outlined-basic"
             label="Fondo de pensiones"
             variant="outlined"
             className="block w-full"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
+            error={errors["afp_FondoPensiones"]?.message}
+            helperText={errors["afp_FondoPensiones"]?.message}
             required
-            // {...register("email")}
+            {...register("afp_FondoPensiones")}
           />
         </StyledTwoColumns>
         <TextField
@@ -146,10 +157,10 @@ const CreateContract = (props) => {
           label="EPS"
           variant="outlined"
           className="block w-full"
-          // error={errors["email"]?.message}
-          // helperText={errors["email"]?.message}
+          error={errors["eps"]?.message}
+          helperText={errors["eps"]?.message}
           required
-          // {...register("email")}
+          {...register("eps")}
         />
         <StyledTwoColumns disabledTransition>
           <StyledDate>
@@ -159,10 +170,10 @@ const CreateContract = (props) => {
               variant="standard"
               className="block w-full"
               type="date"
-              // error={errors["email"]?.message}
-              // helperText={errors["email"]?.message}
+              error={errors["fechaIngreso"]?.message}
+              helperText={errors["fechaIngreso"]?.message}
               required
-              // {...register("email")}
+              {...register("fechaIngreso")}
             />
           </StyledDate>
           <StyledDate>
@@ -172,10 +183,10 @@ const CreateContract = (props) => {
               variant="standard"
               className="block w-full"
               type="date"
-              // error={errors["email"]?.message}
-              // helperText={errors["email"]?.message}
+              error={errors["fechaRetiro"]?.message}
+              helperText={errors["fechaRetiro"]?.message}
               required
-              // {...register("email")}
+              {...register("fechaRetiro")}
             />
           </StyledDate>
         </StyledTwoColumns>
@@ -186,10 +197,10 @@ const CreateContract = (props) => {
             variant="outlined"
             className="block w-full"
             type="number"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
+            error={errors["salario"]?.message}
+            helperText={errors["salario"]?.message}
             required
-            // {...register("email")}
+            {...register("salario")}
           />
           <TextField
             id="outlined-basic"
@@ -197,10 +208,10 @@ const CreateContract = (props) => {
             variant="outlined"
             className="block w-full"
             type="number"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
+            error={errors["auxilioporTrayecto"]?.message}
+            helperText={errors["auxilioporTrayecto"]?.message}
             required
-            // {...register("email")}
+            {...register("auxilioporTrayecto")}
           />
           <TextField
             id="outlined-basic"
@@ -208,10 +219,10 @@ const CreateContract = (props) => {
             variant="outlined"
             className="block w-full"
             type="number"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
+            error={errors["auxilioporTransporte"]?.message}
+            helperText={errors["auxilioporTransporte"]?.message}
             required
-            // {...register("email")}
+            {...register("auxilioporTransporte")}
           />
         </StyledTwoColumns>
         <StyledTwoColumns>
@@ -220,20 +231,20 @@ const CreateContract = (props) => {
             label="Cargo"
             variant="outlined"
             className="block w-full"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
+            error={errors["cargo"]?.message}
+            helperText={errors["cargo"]?.message}
             required
-            // {...register("email")}
+            {...register("cargo")}
           />
           <TextField
             id="outlined-basic"
             label="Titilo universitario"
             variant="outlined"
             className="block w-full"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
+            error={errors["titulo"]?.message}
+            helperText={errors["titulo"]?.message}
             required
-            // {...register("email")}
+            {...register("titulo")}
           />
         </StyledTwoColumns>
         <StyledTwoColumns>
@@ -242,10 +253,10 @@ const CreateContract = (props) => {
             label="Universidad"
             variant="outlined"
             className="block w-full"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
+            error={errors["universidad"]?.message}
+            helperText={errors["universidad"]?.message}
             required
-            // {...register("email")}
+            {...register("universidad")}
           />
           <TextField
             id="outlined-basic"
@@ -253,10 +264,10 @@ const CreateContract = (props) => {
             variant="outlined"
             className="block w-full"
             type="number"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
+            error={errors["telefono"]?.message}
+            helperText={errors["telefono"]?.message}
             required
-            // {...register("email")}
+            {...register("telefono")}
           />
         </StyledTwoColumns>
         <StyledTwoColumns>
@@ -265,21 +276,22 @@ const CreateContract = (props) => {
             label="Dirección"
             variant="outlined"
             className="block w-full"
-            type="email"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
+            type="text"
+            error={errors["direccion"]?.message}
+            helperText={errors["direccion"]?.message}
             required
-            // {...register("email")}
+            {...register("direccion")}
           />
           <TextField
             id="outlined-basic"
             label="E-Mail"
             variant="outlined"
             className="block w-full"
-            // error={errors["email"]?.message}
-            // helperText={errors["email"]?.message}
+            type="email"
+            error={errors["email"]?.message}
+            helperText={errors["email"]?.message}
             required
-            // {...register("email")}
+            {...register("email")}
           />
         </StyledTwoColumns>
         <TextField
@@ -287,12 +299,12 @@ const CreateContract = (props) => {
           label="Observaciónes"
           variant="outlined"
           className="block w-full"
-          // error={errors["email"]?.message}
-          // helperText={errors["email"]?.message}
+          error={errors["observacion"]?.message}
+          helperText={errors["observacion"]?.message}
           required
           multiline
           rows={4}
-          // {...register("email")}
+          {...register("observacion")}
         />
         <Button
           type="submit"
