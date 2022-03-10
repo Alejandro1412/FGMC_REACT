@@ -5,11 +5,11 @@ const useContractsActions = () => {
   const { useProviders } = useApi();
   const { useAdminProviders } = useProviders();
   const { useContractsProviders } = useAdminProviders();
-  const { createContract } = useContractsProviders();
+  const { createContract, getContracts } = useContractsProviders();
 
   const { useAdminTypes } = useStrings();
   const { useAdminContractsTypes } = useAdminTypes();
-  const { CREATE_CONTRACT } = useAdminContractsTypes();
+  const { CREATE_CONTRACT, GET_CONTRACT } = useAdminContractsTypes();
 
   const actCreateContract =
     (
@@ -65,7 +65,17 @@ const useContractsActions = () => {
       }
     };
 
-  return { actCreateContract };
+  const actGetContracts = (onSuccess, onError) => async (dispatch) => {
+    try {
+      const res = await getContracts();
+      dispatch({ type: GET_CONTRACT });
+      onSuccess && onSuccess({ listContracts: res.data.responseDetail });
+    } catch (error) {
+      onError && onError(error);
+    }
+  };
+
+  return { actCreateContract, actGetContracts };
 };
 
 export default useContractsActions;

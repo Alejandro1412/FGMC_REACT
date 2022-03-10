@@ -50,7 +50,16 @@ const useContractsProviders = () => {
     return trackPromise(res);
   };
 
-  return { createContract };
+  const getContracts = () => {
+    const res = axios({
+      method: "GET",
+      url: "/contratos",
+    });
+
+    return trackPromise(res);
+  };
+
+  return { createContract, getContracts };
 };
 
 export default useContractsProviders;

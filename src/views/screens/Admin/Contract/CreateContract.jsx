@@ -26,7 +26,7 @@ import {
 import useControllers from "../../../../controllers";
 
 const CreateContract = (props) => {
-  const { handleChangeScreen } = props;
+  const { handleChangeScreen, screenActive } = props;
 
   const [citiesOfColombian, setCitiesOfColombian] = useState();
 
@@ -47,7 +47,7 @@ const CreateContract = (props) => {
   const { useAdminControllers } = useScreenHooks();
   const { useContracts } = useAdminControllers();
   const { handleCreateContract, register, handleSubmit, errors } = useContracts(
-    { handleChangeScreen }
+    { handleChangeScreen, screenActive }
   );
 
   return (
@@ -322,6 +322,7 @@ const CreateContract = (props) => {
 
 CreateContract.propTypes = {
   handleChangeScreen: PropTypes.func.isRequired,
+  screenActive: PropTypes.number.isRequired,
 };
 
 export default CreateContract;

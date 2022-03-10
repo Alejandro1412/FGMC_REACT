@@ -17,10 +17,16 @@ const AdminContracts = () => {
   return (
     <AdminLayout>
       {screenActive === 0 && (
-        <ListContract handleChangeScreen={setScreenActive} />
+        <ListContract
+          handleChangeScreen={setScreenActive}
+          screenActive={screenActive}
+        />
       )}
       {screenActive === 1 && (
-        <CreateContract handleChangeScreen={setScreenActive} />
+        <CreateContract
+          handleChangeScreen={setScreenActive}
+          screenActive={screenActive}
+        />
       )}
       {screenActive === 2 && (
         <DetailContract handleChangeScreen={setScreenActive} />

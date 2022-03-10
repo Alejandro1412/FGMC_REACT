@@ -1,23 +1,101 @@
 //Packages
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import _ from "lodash";
+import dayjs from "dayjs";
 
 //Hooks
 import useApi from "../../../../api";
 import useStrings from "../../../../strings";
 import useHelpers from "../../../../helpers";
 
-const useContracts = ({ handleChangeScreen }) => {
+//Icons
+import { FaFileDownload } from "react-icons/fa";
+
+const useContracts = ({ screenActive = 0, handleChangeScreen }) => {
+  const [listContracts, setListContracts] = useState([]);
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const { useMessagesTypes, useConstants } = useStrings();
+  const { LIST_TYPE_CONTRACTS, TYPE_CONTRACTS } = useConstants();
+  const { useFormsTypes } = useMessagesTypes();
+  const { REQUIRED_FIELD, EMAIL_NOT_VALID } = useFormsTypes();
+
+  const optionsListContractsColumns = [
+    { id: "nombreContrato", label: "Tipo de contrato", minWidth: 150 },
+    {
+      id: "fechaIngreso",
+      label: "Fecha de ingreso",
+      minWidth: 170,
+      align: "right",
+      format: (value) => value.toLocaleString("en-US"),
+    },
+    {
+      id: "cargo",
+      label: "Cargo",
+      minWidth: 170,
+      align: "right",
+      format: (value) => value.toFixed(2),
+    },
+    {
+      id: "email",
+      label: "Email",
+      minWidth: 170,
+      align: "right",
+      format: (value) => value.toFixed(2),
+    },
+    {
+      id: "telefono",
+      label: "Teléfono",
+      minWidth: 170,
+      align: "right",
+      format: (value) => value.toFixed(2),
+    },
+    {
+      id: "accion",
+      label: "Acciones",
+      minWidth: 170,
+      align: "right",
+      format: (value) => value.toFixed(2),
+    },
+  ];
+
+  const optionsListContractsRows = useMemo(() => {
+    if (listContracts.length > 0) {
+      const response = _.map(listContracts, (correctiveA) => {
+        const { _id, nombreContrato, fechaIngreso, cargo, email, telefono } =
+          correctiveA;
+        const dateInJsFechaIngreso = new Date(fechaIngreso);
+        return {
+          id: _id,
+          nombreContrato: TYPE_CONTRACTS[nombreContrato],
+          fechaIngreso: dayjs(dateInJsFechaIngreso).format("MMM DD YYYY"),
+          cargo,
+          email,
+          telefono: telefono.toString(),
+          accion: (
+            <div className="flex justify-end">
+              <FaFileDownload className="cursor-pointer w-6 h-6 text-blue-400" />
+            </div>
+          ),
+        };
+      });
+
+      return response;
+    }
+
+    return [];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listContracts]);
+
   const { useActions } = useApi();
   const { dispatch, useAdminActions } = useActions();
   const { useContractsActions } = useAdminActions();
-  const { actCreateContract } = useContractsActions();
-
-  const { useMessagesTypes, useConstants } = useStrings();
-  const { LIST_TYPE_CONTRACTS } = useConstants();
-  const { useFormsTypes } = useMessagesTypes();
-  const { REQUIRED_FIELD, EMAIL_NOT_VALID } = useFormsTypes();
+  const { actCreateContract, actGetContracts } = useContractsActions();
 
   const { useQuickFunctions } = useHelpers();
   const { getYearMonthDayFromDate } = useQuickFunctions();
@@ -73,6 +151,16 @@ const useContracts = ({ handleChangeScreen }) => {
     mode: "onChange",
   });
 
+  useEffect(() => {
+    screenActive === 0 &&
+      dispatch(
+        actGetContracts(({ listContracts }) => {
+          setListContracts(listContracts);
+        })
+      );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleCreateContract = (data) => {
     const dateAux = getYearMonthDayFromDate({
       dateInString: data.fechaNacimiento,
@@ -101,6 +189,15 @@ const useContracts = ({ handleChangeScreen }) => {
     );
   };
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
   return {
     LIST_TYPE_CONTRACTS,
     handleCreateContract,
@@ -110,6 +207,16 @@ const useContracts = ({ handleChangeScreen }) => {
     register,
     handleSubmit,
     errors,
+
+    //table
+    page,
+    setPage,
+    rowsPerPage,
+    setRowsPerPage,
+    optionsListContractsColumns,
+    optionsListContractsRows,
+    handleChangePage,
+    handleChangeRowsPerPage,
   };
 };
 

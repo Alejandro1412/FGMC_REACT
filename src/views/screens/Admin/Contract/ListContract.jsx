@@ -4,85 +4,32 @@ import PropTypes from "prop-types";
 //Componentes
 import Button from "@mui/material/Button";
 
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 
-//Icons
-import { FaFileDownload } from "react-icons/fa";
+//Hooks
+import useControllers from "../../../../controllers";
 
 const ListContract = (props) => {
-  const { handleChangeScreen } = props;
+  const { handleChangeScreen, screenActive } = props;
 
-  function createData(
-    typeContract,
-    nameEmployed,
-    dateInit,
-    jobTitle,
-    email,
-    phone
-  ) {
-    return {
-      typeContract,
-      nameEmployed,
-      dateInit,
-      jobTitle,
-      email,
-      phone,
-      accion: (
-        <div className="flex justify-end">
-          <FaFileDownload className="cursor-pointer w-6 h-6 text-blue-400" />
-        </div>
-      ),
-    };
-  }
-
-  const rows = [
-    createData(
-      "Termino fijo",
-      "Alejandro",
-      "Marzo 2020",
-      "Aseador",
-      "user@gmail.com",
-      "315 324 6776"
-    ),
-    createData(
-      "Prestacion de servicios",
-      "Luis",
-      "Febrero 2018",
-      "Ingeniero electrico",
-      "user@gmail.com",
-      "315 324 6776"
-    ),
-    createData(
-      "Termino fijo inferior a un año",
-      "Vannesa",
-      "Junio 2017",
-      "Ingeniera de sistemas",
-      "user@gmail.com",
-      "315 324 6776"
-    ),
-    createData(
-      "Agente educativo",
-      "Patricio",
-      "Enero 2022",
-      "Plomero",
-      "user@gmail.com",
-      "315 324 6776"
-    ),
-    createData(
-      "Contrato docentes",
-      "Andres",
-      "Diciemnbre 2020",
-      "Maestro",
-      "user@gmail.com",
-      "315 324 6776"
-    ),
-  ];
+  const { useScreenHooks } = useControllers();
+  const { useAdminControllers } = useScreenHooks();
+  const { useContracts } = useAdminControllers();
+  const {
+    page,
+    rowsPerPage,
+    optionsListContractsColumns,
+    optionsListContractsRows,
+    handleChangePage,
+    handleChangeRowsPerPage,
+  } = useContracts({ screenActive });
 
   return (
     <>
@@ -97,45 +44,61 @@ const ListContract = (props) => {
 
       <h2 className="text-center font-bold text-2xl"> Contratos </h2>
 
-      <TableContainer component={Paper} className="mt-10">
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Tipo de contrato</TableCell>
-              <TableCell align="right">Nombre contratista</TableCell>
-              <TableCell align="right">Fecha de ingreso</TableCell>
-              <TableCell align="right">Cargo</TableCell>
-              <TableCell align="right">Email</TableCell>
-              <TableCell align="right">Teléfono</TableCell>
-              <TableCell align="right">Acciones</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.typeContract}
-                </TableCell>
-                <TableCell align="right">{row.nameEmployed}</TableCell>
-                <TableCell align="right">{row.dateInit}</TableCell>
-                <TableCell align="right">{row.jobTitle}</TableCell>
-                <TableCell align="right">{row.email}</TableCell>
-                <TableCell align="right">{row.phone}</TableCell>
-                <TableCell align="right">{row.accion}</TableCell>
+      <Paper sx={{ width: "100%", overflow: "hidden" }} className="mt-10">
+        <TableContainer sx={{ maxHeight: 440 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {optionsListContractsColumns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {optionsListContractsRows
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      {optionsListContractsColumns.map((column) => {
+                        const value = row[column.id];
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={optionsListContractsRows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
     </>
   );
 };
 
 ListContract.propTypes = {
   handleChangeScreen: PropTypes.func.isRequired,
+  screenActive: PropTypes.number.isRequired,
 };
 
 export default ListContract;
