@@ -1,14 +1,23 @@
 //Packages
 import React, { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import PropTypes from "prop-types";
+//Styles toast
+import "react-toastify/dist/ReactToastify.css";
+
+//Hooks
+import useInterceptor from "../../../../config/interceptor";
 
 const DefaultToast = (props) => {
-  const { showToast, handleHideToast, type, message } = props;
+  const { store } = props;
+
+  const { showToast, handleHideToast, toastMessage, toastType } =
+    useInterceptor({
+      store,
+    });
 
   const notify = () => {
-    toast[type](message, {
+    toast[toastType](toastMessage, {
       onClose: () => handleHideToast(),
       position: "top-center",
       autoClose: 5000,
@@ -35,6 +44,7 @@ DefaultToast.propTypes = {
   handleHideToast: PropTypes.func,
   type: PropTypes.oneOf(["success", "error"]),
   message: PropTypes.string,
+  store: PropTypes.object.isRequired,
 };
 
 DefaultToast.defaultProps = {

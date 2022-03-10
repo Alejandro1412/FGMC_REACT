@@ -9,6 +9,8 @@ import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
+
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 
@@ -44,7 +46,8 @@ const CreateContract = (props) => {
   const { useScreenHooks } = useControllers();
   const { useAdminControllers } = useScreenHooks();
   const { useContracts } = useAdminControllers();
-  const { handleCreateContract } = useContracts();
+  const { handleCreateContract, register, handleSubmit, errors } =
+    useContracts();
 
   return (
     <>
@@ -57,8 +60,12 @@ const CreateContract = (props) => {
 
       <h2 className="text-center font-bold text-2xl"> Crear contrato </h2>
 
-      <StyledForm>
-        <FormControl variant="standard" fullWidth>
+      <StyledForm onSubmit={handleSubmit(handleCreateContract)}>
+        <FormControl
+          variant="standard"
+          fullWidth
+          error={errors["nombreContrato"]?.message}
+        >
           <InputLabel id="demo-simple-select-standard-label">
             {" "}
             Selecciona el tipo de contrato
@@ -66,16 +73,15 @@ const CreateContract = (props) => {
           <Select
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
-            //   value={age}
-            //   onChange={handleChange}
+            {...register("nombreContrato")}
             label="Tipo de contrato"
           >
             <MenuItem value="tf">Termino fijo</MenuItem>
             <MenuItem value="ps">Prestacion de servicios</MenuItem>
-            <MenuItem value="ps">Termino fijo inferior a un año</MenuItem>
-            <MenuItem value="ps">Agente educativo</MenuItem>
-            <MenuItem value="ps">Contrato docentes</MenuItem>
+            <MenuItem value="ae">Agente educativo</MenuItem>
+            <MenuItem value="cd">Contrato docentes</MenuItem>
           </Select>
+          <FormHelperText>{errors["nombreContrato"]?.message}</FormHelperText>
         </FormControl>
 
         <StyledTwoColumns disabledTransition>
@@ -289,9 +295,10 @@ const CreateContract = (props) => {
           // {...register("email")}
         />
         <Button
+          type="submit"
           variant="contained"
           className="w-40"
-          onClick={handleCreateContract}
+          onClick={handleSubmit(handleCreateContract)}
         >
           {" "}
           Crear
