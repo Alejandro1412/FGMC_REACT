@@ -79,7 +79,15 @@ const useContracts = ({ screenActive = 0, handleChangeScreen }) => {
           telefono: telefono.toString(),
           accion: (
             <div className="flex justify-end">
-              <FaFileDownload className="cursor-pointer w-6 h-6 text-blue-400" />
+              <FaFileDownload
+                onClick={() => {
+                  handleChangeScreen((prevState) => ({
+                    data: correctiveA,
+                    view: 3,
+                  }));
+                }}
+                className="cursor-pointer w-6 h-6 text-blue-400"
+              />
             </div>
           ),
         };
@@ -183,7 +191,10 @@ const useContracts = ({ screenActive = 0, handleChangeScreen }) => {
           fechaRetiro: dateAuxSalida,
         },
         () => {
-          handleChangeScreen(0);
+          handleChangeScreen((prevState) => ({
+            ...prevState,
+            view: 0,
+          }));
         }
       )
     );

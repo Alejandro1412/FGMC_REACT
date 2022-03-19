@@ -7,29 +7,36 @@ import useViews from "../../..";
 import CreateContract from "./CreateContract";
 import DetailContract from "./DetailContract";
 import ListContract from "./ListContract";
+import PdfView from "./PdfView";
 
 const AdminContracts = () => {
   const { useLayouts } = useViews();
   const { AdminLayout } = useLayouts();
 
-  const [screenActive, setScreenActive] = useState(0);
+  const [screenActive, setScreenActive] = useState({ view: 0, data: {} });
 
   return (
     <AdminLayout>
-      {screenActive === 0 && (
+      {screenActive.view === 0 && (
         <ListContract
           handleChangeScreen={setScreenActive}
-          screenActive={screenActive}
+          screenActive={screenActive.view}
         />
       )}
-      {screenActive === 1 && (
+      {screenActive.view === 1 && (
         <CreateContract
+          handleChangeScreen={setScreenActive}
+          screenActive={screenActive.view}
+        />
+      )}
+      {screenActive.view === 2 && (
+        <DetailContract handleChangeScreen={setScreenActive} />
+      )}
+      {screenActive.view === 3 && (
+        <PdfView
           handleChangeScreen={setScreenActive}
           screenActive={screenActive}
         />
-      )}
-      {screenActive === 2 && (
-        <DetailContract handleChangeScreen={setScreenActive} />
       )}
     </AdminLayout>
   );

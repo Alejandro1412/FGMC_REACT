@@ -1,3 +1,4 @@
+//Packagaes
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -29,14 +30,17 @@ const ListContract = (props) => {
     optionsListContractsRows,
     handleChangePage,
     handleChangeRowsPerPage,
-  } = useContracts({ screenActive });
+  } = useContracts({ screenActive, handleChangeScreen });
 
   return (
     <>
       <Button
         variant="contained"
         onClick={() => {
-          handleChangeScreen(1);
+          handleChangeScreen((prevState) => ({
+            ...prevState,
+            view: 1,
+          }));
         }}
       >
         Crear Contrato
