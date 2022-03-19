@@ -22,7 +22,6 @@ const PdfView = (props) => {
   const { useConstants } = useStrings();
   const { TYPE_CONTRACTS } = useConstants();
 
-  console.log({ data });
   const dateInJsFechaIngreso = new Date(data.fechaIngreso);
   const dateInJsFechaFin = new Date(data.fechaRetiro);
 
