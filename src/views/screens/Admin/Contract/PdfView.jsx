@@ -49,7 +49,7 @@ const PdfView = (props) => {
         )}
       </Pdf>
 
-      <section ref={pdfViewRef} className="p-10">
+      <section ref={pdfViewRef} className="p-10 max-w-3xl mx-auto">
         <h1 className="text-center pb-5">
           {" "}
           CONTRATO:{" "}

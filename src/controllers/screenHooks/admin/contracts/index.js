@@ -16,6 +16,7 @@ import { FaFileDownload } from "react-icons/fa";
 
 const useContracts = ({ screenActive = 0, handleChangeScreen }) => {
   const [listContracts, setListContracts] = useState([]);
+  const [searchContracts, setSearchContracts] = useState("");
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -93,12 +94,25 @@ const useContracts = ({ screenActive = 0, handleChangeScreen }) => {
         };
       });
 
-      return response;
+      if (searchContracts) {
+        const filterResponse = _.filter(
+          response,
+          (dataFilter) =>
+            dataFilter.nombreContrato &&
+            dataFilter.nombreContrato
+              .toLowerCase()
+              .includes(searchContracts.toLowerCase())
+        );
+
+        return filterResponse;
+      } else {
+        return response;
+      }
     }
 
     return [];
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listContracts]);
+  }, [listContracts, searchContracts]);
 
   const { useActions } = useApi();
   const { dispatch, useAdminActions } = useActions();
@@ -228,6 +242,10 @@ const useContracts = ({ screenActive = 0, handleChangeScreen }) => {
     optionsListContractsRows,
     handleChangePage,
     handleChangeRowsPerPage,
+
+    //Input contract search
+    searchContracts,
+    setSearchContracts,
   };
 };
 

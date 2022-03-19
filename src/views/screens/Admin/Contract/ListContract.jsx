@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 
 //Componentes
 import Button from "@mui/material/Button";
+import { TextField } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
 
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -16,6 +18,9 @@ import TableRow from "@mui/material/TableRow";
 
 //Hooks
 import useControllers from "../../../../controllers";
+
+//icons
+import { BiSearch } from "react-icons/bi";
 
 const ListContract = (props) => {
   const { handleChangeScreen, screenActive } = props;
@@ -30,6 +35,8 @@ const ListContract = (props) => {
     optionsListContractsRows,
     handleChangePage,
     handleChangeRowsPerPage,
+    searchContracts,
+    setSearchContracts,
   } = useContracts({ screenActive, handleChangeScreen });
 
   return (
@@ -47,6 +54,25 @@ const ListContract = (props) => {
       </Button>
 
       <h2 className="text-center font-bold text-2xl"> Contratos </h2>
+
+      <div className="text-center">
+        <TextField
+          id="outlined-basic"
+          variant="standard"
+          className="block mt-5"
+          helperText="Busca por tipo de contrato"
+          type="text"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <BiSearch />
+              </InputAdornment>
+            ),
+          }}
+          value={searchContracts}
+          onChange={(e) => setSearchContracts(e.target.value)}
+        />
+      </div>
 
       <Paper sx={{ width: "100%", overflow: "hidden" }} className="mt-10">
         <TableContainer sx={{ maxHeight: 440 }}>
