@@ -9,8 +9,18 @@ import Button from "@mui/material/Button";
 //Assets
 import { BiDownload } from "react-icons/bi";
 
+//Hooks
+import useControllers from "../../../../controllers";
+
 const ListFile = (props) => {
   const { handleChangeScreen } = props;
+
+  const { useScreenHooks } = useControllers();
+  const { useAdminControllers } = useScreenHooks();
+  const { useDocumentManagment } = useAdminControllers();
+  const { listOfMediaFiles } = useDocumentManagment();
+
+  console.log({ listOfMediaFiles });
 
   const dataFake = useRef([
     { name: "Foto grado", url: "https://google.com" },

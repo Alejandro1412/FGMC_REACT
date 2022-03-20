@@ -13,8 +13,16 @@ import Button from "@mui/material/Button";
 //Styles
 import { StyledForm } from "../../../../styles/form.styles";
 
+//Hooks
+import useControllers from "../../../../controllers";
+
 const CreateFile = (props) => {
   const { handleChangeScreen } = props;
+
+  const { useScreenHooks } = useControllers();
+  const { useAdminControllers } = useScreenHooks();
+  const { useDocumentManagment } = useAdminControllers();
+  useDocumentManagment();
 
   return (
     <>
