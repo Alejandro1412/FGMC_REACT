@@ -14,9 +14,17 @@ const AdminDocumentManagment = () => {
 
   return (
     <AdminLayout>
-      {screenActive === 0 && <ListFile handleChangeScreen={setScreenActive} />}
+      {screenActive === 0 && (
+        <ListFile
+          handleChangeScreen={setScreenActive}
+          screenActive={screenActive}
+        />
+      )}
       {screenActive === 1 && (
-        <CreateFile handleChangeScreen={setScreenActive} />
+        <CreateFile
+          handleChangeScreen={setScreenActive}
+          screenActive={screenActive}
+        />
       )}
     </AdminLayout>
   );

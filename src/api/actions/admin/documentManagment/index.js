@@ -13,25 +13,24 @@ const useDocumentManagmentActions = () => {
   const { createUrlForMediaFile, uploadMediaFile, getAllMediaFiles } =
     useDocumentManagmentProviders();
 
-  const actCreateUrlForMediaFile = (onSuccess, onError) => async (dispatch) => {
-    try {
-      const res = await createUrlForMediaFile();
-      dispatch({ type: CREATE_URL_MEDIA_FILE });
-      onSuccess && onSuccess(res);
-    } catch (error) {
-      onError && onError(error);
-    }
-  };
-
   const actUploadMediaFile =
     ({ nombreDocumento, urlDocumento }, onSuccess, onError) =>
     async (dispatch) => {
       try {
-        const res = await uploadMediaFile({
-          nombreDocumento,
-          urlDocumento,
-        });
+        const res = await uploadMediaFile({ nombreDocumento, urlDocumento });
         dispatch({ type: UPLOAD_MEDIA_FILE });
+        onSuccess && onSuccess(res);
+      } catch (error) {
+        onError && onError(error);
+      }
+    };
+
+  const actCreateUrlForMediaFile =
+    ({ formData }, onSuccess, onError) =>
+    async (dispatch) => {
+      try {
+        const res = await createUrlForMediaFile({ formData });
+        dispatch({ type: CREATE_URL_MEDIA_FILE });
         onSuccess && onSuccess(res);
       } catch (error) {
         onError && onError(error);

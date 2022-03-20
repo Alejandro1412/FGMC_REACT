@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import imageUploadFile from "../../../assets/images/upload-file.png";
 
 const UploadFiles = (props) => {
-  const { className, name, accept } = props;
+  const { className, name, accept, errors, onChange } = props;
 
   const inputRef = useRef(null);
   const [fileName, setFileName] = useState("");
@@ -35,7 +35,8 @@ const UploadFiles = (props) => {
         ref={inputRef}
         name={name}
         accept={accept}
-        onChange={handleGetFile}
+        onInput={handleGetFile}
+        onChange={onChange}
       />
 
       {fileName && (
@@ -44,6 +45,8 @@ const UploadFiles = (props) => {
           <span className="bg-amber-300 px-4 py-1 rounded-md">{fileName}</span>{" "}
         </p>
       )}
+
+      {errors?.[name] && <p className="text-red-700">{errors[name].message}</p>}
     </section>
   );
 };
@@ -52,6 +55,8 @@ UploadFiles.propTypes = {
   className: PropTypes.string,
   name: PropTypes.string,
   accept: PropTypes.string,
+  errors: PropTypes.object,
+  onChange: PropTypes.object,
 };
 
 UploadFiles.defaultProps = {
@@ -59,6 +64,8 @@ UploadFiles.defaultProps = {
   name: "",
   accept:
     "image/png, image/jpeg, application/pdf, application/msword, application/vnd.ms-excel ",
+  errors: {},
+  onChange: () => {},
 };
 
 export default UploadFiles;

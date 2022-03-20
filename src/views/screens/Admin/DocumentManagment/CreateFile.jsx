@@ -1,6 +1,7 @@
 //Packages
 import React from "react";
 import PropTypes from "prop-types";
+import { Controller } from "react-hook-form";
 
 //Icons/Assets
 import { BiArrowBack } from "react-icons/bi";
@@ -17,12 +18,22 @@ import { StyledForm } from "../../../../styles/form.styles";
 import useControllers from "../../../../controllers";
 
 const CreateFile = (props) => {
-  const { handleChangeScreen } = props;
+  const { handleChangeScreen, screenActive } = props;
 
   const { useScreenHooks } = useControllers();
   const { useAdminControllers } = useScreenHooks();
   const { useDocumentManagment } = useAdminControllers();
-  useDocumentManagment();
+  const {
+    register,
+    errors,
+    handleSubmit,
+    formCreateUrl,
+    handleUploadMediaFile,
+    handleGetUrlMediaFile,
+  } = useDocumentManagment({
+    screenActive,
+    handleChangeScreen,
+  });
 
   return (
     <>
@@ -37,18 +48,37 @@ const CreateFile = (props) => {
 
       <StyledForm>
         <TextField
-          id="outlined-basic"
+          id="nombreDocumento"
+          name="nombreDocumento"
           label="Nombre del documento"
           variant="standard"
           className="block w-full lg:w-1/2"
           type="text"
-          // error={errors["email"]?.message}
-          // helperText={errors["email"]?.message}
+          error={errors["nombreDocumento"]?.message}
+          helperText={errors["nombreDocumento"]?.message}
           required
-          // {...register("email")}
+          {...register("nombreDocumento")}
         />
-        <UploadFiles className="w-full lg:w-1/2" />
-        <Button variant="contained" className="w-40">
+        <Controller
+          name="urlDocumento"
+          control={formCreateUrl.control}
+          render={({ field: { name, onChange } }) => {
+            return (
+              <UploadFiles
+                className="w-full lg:w-1/2"
+                name={name}
+                accept="application/pdf,image/*,application/vnd.ms-excel,application/msword"
+                errors={formCreateUrl.formState.errors}
+                onChange={(event) => handleGetUrlMediaFile({ event, onChange })}
+              />
+            );
+          }}
+        />
+        <Button
+          variant="contained"
+          className="w-40"
+          onClick={handleSubmit(handleUploadMediaFile)}
+        >
           {" "}
           Cargar Documento
         </Button>
@@ -59,6 +89,7 @@ const CreateFile = (props) => {
 
 CreateFile.propTypes = {
   handleChangeScreen: PropTypes.func.isRequired,
+  screenActive: PropTypes.number.isRequired,
 };
 
 export default CreateFile;
