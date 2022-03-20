@@ -105,7 +105,7 @@ const CreateCorrectiveActions = (props) => {
               >
                 <InputLabel id="demo-simple-select-standard-label">
                   {" "}
-                  Selecciona el responsable
+                  Selecciona la gravedad
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-standard-label"
