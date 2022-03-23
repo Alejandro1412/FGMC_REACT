@@ -95,14 +95,19 @@ const useContracts = ({ screenActive = 0, handleChangeScreen }) => {
       });
 
       if (searchContracts) {
-        const filterResponse = _.filter(
-          response,
-          (dataFilter) =>
-            dataFilter.nombreContrato &&
-            dataFilter.nombreContrato
+        const filterResponse = _.filter(response, (dataFilter) => {
+          if (
+            (dataFilter.nombreContrato &&
+              dataFilter.nombreContrato
+                .toLowerCase()
+                .includes(searchContracts.toLowerCase())) ||
+            dataFilter.email
               .toLowerCase()
               .includes(searchContracts.toLowerCase())
-        );
+          ) {
+            return dataFilter;
+          }
+        });
 
         return filterResponse;
       } else {
