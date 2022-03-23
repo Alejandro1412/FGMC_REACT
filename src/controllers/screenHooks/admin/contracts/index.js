@@ -191,15 +191,15 @@ const useContracts = ({ screenActive = 0, handleChangeScreen }) => {
   const handleCreateContract = (data) => {
     const dateAux = getYearMonthDayFromDate({
       dateInString: data.fechaNacimiento,
-      format: "dmy2",
+      format: "ymd",
     });
     const dateAuxIngreso = getYearMonthDayFromDate({
       dateInString: data.fechaIngreso,
-      format: "dmy2",
+      format: "ymd",
     });
     const dateAuxSalida = getYearMonthDayFromDate({
       dateInString: data.fechaRetiro,
-      format: "dmy2",
+      format: "ymd",
     });
     dispatch(
       actCreateContract(
