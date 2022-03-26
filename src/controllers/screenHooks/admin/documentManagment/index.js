@@ -28,6 +28,7 @@ const useDocumentManagment = ({
   const schemaUploadFile = yup.object({
     nombreDocumento: yup.string().nullable().required(REQUIRED_FIELD),
     urlDocumento: yup.string().nullable().required(REQUIRED_FIELD),
+    categoria: yup.string().nullable().required(REQUIRED_FIELD),
   });
 
   const schemaCreateUrlFile = yup.object({

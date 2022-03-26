@@ -10,6 +10,11 @@ import { BiArrowBack } from "react-icons/bi";
 import TextField from "@mui/material/TextField";
 import UploadFiles from "../../../components/UploadFiles/UploadFiles";
 import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
+import Select from "@mui/material/Select";
 
 //Styles
 import { StyledForm } from "../../../../styles/form.styles";
@@ -59,6 +64,29 @@ const CreateFile = (props) => {
           required
           {...register("nombreDocumento")}
         />
+        <FormControl
+          variant="standard"
+          error={errors["categoria"]?.message}
+          className="block w-full lg:w-1/2"
+        >
+          <InputLabel id="demo-simple-select-standard-label">
+            {" "}
+            Selecciona la categoria del documento
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            {...register("categoria")}
+            label="Tipo de contrato"
+          >
+            <MenuItem value="ms">Mision - vision</MenuItem>
+            <MenuItem value="re">Requerimientos</MenuItem>
+            <MenuItem value="se">Seguridad en el trabajo</MenuItem>
+            <MenuItem value="fi">Formatos institucionales</MenuItem>
+            <MenuItem value="otros">Otros</MenuItem>
+          </Select>
+          <FormHelperText>{errors["categoria"]?.message}</FormHelperText>
+        </FormControl>
         <Controller
           name="urlDocumento"
           control={formCreateUrl.control}
