@@ -14,10 +14,14 @@ const useDocumentManagmentActions = () => {
     useDocumentManagmentProviders();
 
   const actUploadMediaFile =
-    ({ nombreDocumento, urlDocumento }, onSuccess, onError) =>
+    ({ nombreDocumento, urlDocumento, categoria }, onSuccess, onError) =>
     async (dispatch) => {
       try {
-        const res = await uploadMediaFile({ nombreDocumento, urlDocumento });
+        const res = await uploadMediaFile({
+          nombreDocumento,
+          urlDocumento,
+          categoria,
+        });
         dispatch({ type: UPLOAD_MEDIA_FILE });
         onSuccess && onSuccess(res);
       } catch (error) {

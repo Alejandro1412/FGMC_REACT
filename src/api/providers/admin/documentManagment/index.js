@@ -3,11 +3,11 @@ import axios from "axios";
 import { trackPromise } from "react-promise-tracker";
 
 const useDocumentManagmentProviders = () => {
-  const uploadMediaFile = ({ nombreDocumento, urlDocumento }) => {
+  const uploadMediaFile = ({ nombreDocumento, urlDocumento, categoria }) => {
     const res = axios({
       method: "POST",
       url: "/documento",
-      data: { nombreDocumento, urlDocumento },
+      data: { nombreDocumento, urlDocumento, categoria },
     });
 
     return trackPromise(res);

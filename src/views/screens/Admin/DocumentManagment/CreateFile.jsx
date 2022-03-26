@@ -45,7 +45,7 @@ const CreateFile = (props) => {
       <BiArrowBack
         className="cursor-pointer w-8 h-8"
         onClick={() => {
-          handleChangeScreen(0);
+          handleChangeScreen((prevState) => ({ ...prevState, view: 0 }));
         }}
       />
 

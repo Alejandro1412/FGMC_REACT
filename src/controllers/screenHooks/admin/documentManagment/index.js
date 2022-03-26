@@ -1,18 +1,110 @@
 //Packages
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import _ from "lodash";
+import dayjs from "dayjs";
 
 //Hooks
 import useApi from "../../../../api";
 import useStrings from "../../../../strings";
 
+//Assets
+import CardTop from "../../../../assets/images/card-top.jpg";
+
+//Assets
+import { BiDownload } from "react-icons/bi";
+
 const useDocumentManagment = ({
   screenActive = 0,
   handleChangeScreen,
+  categorySelected,
 } = {}) => {
   const [listOfMediaFiles, setListOfMediaFiles] = useState([]);
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const CATEGORIAS = [
+    {
+      name: "Mision - vision",
+      id: "ms",
+      imagen: CardTop,
+    },
+    {
+      name: "Requerimientos",
+      id: "re",
+      imagen: CardTop,
+    },
+    {
+      name: "Seguridad en el trabajo",
+      id: "se",
+      imagen: CardTop,
+    },
+    {
+      name: "Formatos institucionales",
+      id: "fi",
+      imagen: CardTop,
+    },
+    {
+      name: "Otros",
+      id: "otros",
+      imagen: CardTop,
+    },
+  ];
+
+  const optionsFilesByCategoryColumns = [
+    { id: "nombreDocumento", label: "Nombre documento", minWidth: 170 },
+    {
+      id: "createdAt",
+      label: "Fecha creacion",
+      minWidth: 170,
+      align: "right",
+      format: (value) => value.toLocaleString("en-US"),
+    },
+    {
+      id: "accion",
+      label: "Acciones",
+      minWidth: 170,
+      align: "right",
+      format: (value) => value.toFixed(2),
+    },
+  ];
+
+  const optionsFilesByCategoryRows = useMemo(() => {
+    if (listOfMediaFiles.length > 0) {
+      const response = _.map(listOfMediaFiles, (correctiveA) => {
+        const { nombreDocumento, createdAt, categoria, urlDocumento } =
+          correctiveA;
+        const dateInJs = new Date(createdAt);
+        const dayFormated = dayjs(dateInJs);
+        return {
+          nombreDocumento,
+          createdAt: dayFormated.format("MMM DD YYYY"),
+          categoria,
+          accion: (
+            <div className="flex justify-end">
+              <BiDownload
+                className="w-8 h-8 cursor-pointer "
+                onClick={() => {
+                  handleDownloadFile({
+                    url: urlDocumento,
+                    nameFile: nombreDocumento.split(" ").join(""),
+                    extension: urlDocumento.split(".")[1],
+                  });
+                }}
+              />
+            </div>
+          ),
+        };
+      }).filter((file) => file.categoria === categorySelected);
+
+      return response;
+    }
+
+    return [];
+  }, [listOfMediaFiles, categorySelected]);
 
   const { useActions } = useApi();
   const { dispatch, useAdminActions } = useActions();
@@ -94,9 +186,11 @@ const useDocumentManagment = ({
         {
           nombreDocumento: data.nombreDocumento,
           urlDocumento: data.urlDocumento,
+          categoria: data.categoria,
         },
         () => {
-          handleChangeScreen && handleChangeScreen(0);
+          handleChangeScreen &&
+            handleChangeScreen((prevState) => ({ ...prevState, view: 0 }));
         }
       )
     );
@@ -125,6 +219,19 @@ const useDocumentManagment = ({
       });
   };
 
+  const handleGoToCategory = (data) => {
+    handleChangeScreen({ data, view: 2 });
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
   return {
     handleGetUrlMediaFile,
     handleUploadMediaFile,
@@ -138,6 +245,15 @@ const useDocumentManagment = ({
     register,
     handleSubmit,
     errors,
+    CATEGORIAS,
+    handleGoToCategory,
+
+    page,
+    rowsPerPage,
+    handleChangePage,
+    handleChangeRowsPerPage,
+    optionsFilesByCategoryColumns,
+    optionsFilesByCategoryRows,
   };
 };
 

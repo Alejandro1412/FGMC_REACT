@@ -6,9 +6,6 @@ import _ from "lodash";
 //Componentes
 import Button from "@mui/material/Button";
 
-//Assets
-import { BiDownload } from "react-icons/bi";
-
 //Hooks
 import useControllers from "../../../../controllers";
 
@@ -18,14 +15,16 @@ const ListFile = (props) => {
   const { useScreenHooks } = useControllers();
   const { useAdminControllers } = useScreenHooks();
   const { useDocumentManagment } = useAdminControllers();
-  const { listOfMediaFiles, handleDownloadFile } = useDocumentManagment();
+  const { CATEGORIAS, handleGoToCategory } = useDocumentManagment({
+    handleChangeScreen,
+  });
 
   return (
     <>
       <Button
         variant="contained"
         onClick={() => {
-          handleChangeScreen(1);
+          handleChangeScreen((prevState) => ({ ...prevState, view: 1 }));
         }}
       >
         Crear documento
@@ -36,7 +35,7 @@ const ListFile = (props) => {
         Documentos disponibles{" "}
       </h2>
 
-      <section className="flex flex-col justify-center items-center space-y-4 mt-10 w-full">
+      {/* <section className="flex flex-col justify-center items-center space-y-4 mt-10 w-full">
         {listOfMediaFiles.length > 0 &&
           _.map(listOfMediaFiles, (file, index) => {
             return (
@@ -61,6 +60,27 @@ const ListFile = (props) => {
               </div>
             );
           })}
+      </section> */}
+
+      <section className="flex flex-row flex-wrap justify-center">
+        {_.map(CATEGORIAS, (category, idx) => {
+          return (
+            <div
+              className="max-w-sm rounded overflow-hidden shadow-lg mx-10 my-10 cursor-pointer"
+              key={`card-${idx}`}
+              onClick={() => {
+                handleGoToCategory(category);
+              }}
+            >
+              <img
+                class="w-full"
+                src={category.imagen}
+                alt="Sunset in the mountains"
+              ></img>
+              <div class="font-bold text-xl mb-2">{category.name}</div>
+            </div>
+          );
+        })}
       </section>
     </>
   );
