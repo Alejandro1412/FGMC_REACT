@@ -23,12 +23,12 @@ const data = [
   ["Task", "Hours per Day"],
   ["Especialización", 36],
   ["Maestria", 20],
-  ["Pregrado", 179],
+  ["Pregrado", 99],
   ["Desconocidos", 15],
 ];
 
 const options = {
-  title: "Indice de continuidad en educacion de los egrasados gimnasistas",
+  title: "Indice de continuidad en educacion de los egrasados",
   is3D: true,
 };
 
@@ -37,7 +37,7 @@ const data2 = [
   ["Profesional", 209, "#b87333"], // RGB value
   ["Tecnólogo", 73, "silver"], // English color name
   ["Técnico", 38, "gold"],
-  ["No continuaron estudios", 11, "color: #e5e4e2"], // CSS-style declaration
+  ["No continuaron ", 11, "color: #e5e4e2"], // CSS-style declaration
 ];
 
 const BatteryIndicator = () => {
@@ -63,7 +63,7 @@ const BatteryIndicator = () => {
               <AccordionItem className="w-full lg:w-11/12">
                 <AccordionItemHeading>
                   <AccordionItemButton>
-                    Estadisticas Acciones correctivas
+                    Estadistica Gravedad del problema - Acciones correctivas
                   </AccordionItemButton>
                 </AccordionItemHeading>
                 <AccordionItemPanel className="itemAccordion">
@@ -76,7 +76,7 @@ const BatteryIndicator = () => {
               </AccordionItem>
               <AccordionItem className="w-full lg:w-11/12">
                 <AccordionItemHeading>
-                  <AccordionItemButton>Estadisticas dos</AccordionItemButton>
+                  <AccordionItemButton>Continuidad egresados Gimnasistas</AccordionItemButton>
                 </AccordionItemHeading>
                 <AccordionItemPanel className="itemAccordion">
                   <Chart chartType="PieChart" data={data} options={options} />
@@ -84,14 +84,14 @@ const BatteryIndicator = () => {
               </AccordionItem>
               <AccordionItem className="w-full lg:w-11/12">
                 <AccordionItemHeading>
-                  <AccordionItemButton>Estadisticas tres</AccordionItemButton>
+                  <AccordionItemButton>Tipo de estudios egresados Gimnasistas</AccordionItemButton>
                 </AccordionItemHeading>
                 <AccordionItemPanel className="itemAccordion">
                   <Chart
                     chartType="ColumnChart"
                     data={data2}
                     options={{
-                      title: "Tipo de estudio",
+                      title: "Estudiantes profesionales, Tecnologos, Tecnicos y sin estudios",
                     }}
                   />
                 </AccordionItemPanel>

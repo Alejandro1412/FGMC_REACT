@@ -134,7 +134,31 @@ const CreateContract = (props) => {
         </StyledTwoColumns>
 
         <StyledTwoColumns>
-          <TextField
+
+          <FormControl
+            variant="standard"
+            fullWidth
+            error={errors["CajaCompensacion"]?.message}
+          >
+            <InputLabel id="demo-simple-select-standard-label">
+              {" "}
+              Selecciona caja de compensación
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              {...register("CajaCompensacion")}
+              label="Fondo de pensiones"
+            >
+              <MenuItem value="tf">Colsubsidio</MenuItem>
+              <MenuItem value="ps">Compensar</MenuItem>
+              <MenuItem value="ae">Comfenalco</MenuItem>
+              <MenuItem value="cd">Camacol</MenuItem>
+            </Select>
+            <FormHelperText>{errors["CajaCompensacion"]?.message}</FormHelperText>
+          </FormControl>
+
+          {/* <TextField
             id="outlined-basic"
             label="Caja de compensasion"
             variant="outlined"
@@ -143,8 +167,30 @@ const CreateContract = (props) => {
             helperText={errors["CajaCompensacion"]?.message}
             required
             {...register("CajaCompensacion")}
-          />
-          <TextField
+          /> */}
+          <FormControl
+            variant="standard"
+            fullWidth
+            error={errors["afp_FondoPensiones"]?.message}
+          >
+            <InputLabel id="demo-simple-select-standard-label">
+              {" "}
+              Selecciona fondo de pensiones
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              {...register("afp_FondoPensiones")}
+              label="Fondo de pensiones"
+            >
+              <MenuItem value="tf">Porvenir</MenuItem>
+              <MenuItem value="ps">Colseguros</MenuItem>
+              <MenuItem value="ae">Proteccion</MenuItem>
+              <MenuItem value="cd">Comfenalco</MenuItem>
+            </Select>
+            <FormHelperText>{errors["afp_FondoPensiones"]?.message}</FormHelperText>
+          </FormControl>
+          {/*    <TextField
             id="outlined-basic"
             label="Fondo de pensiones"
             variant="outlined"
@@ -153,9 +199,34 @@ const CreateContract = (props) => {
             helperText={errors["afp_FondoPensiones"]?.message}
             required
             {...register("afp_FondoPensiones")}
-          />
+          /> */}
+
         </StyledTwoColumns>
-        <TextField
+
+        <FormControl
+          variant="standard"
+          fullWidth
+          error={errors["eps"]?.message}
+        >
+          <InputLabel id="demo-simple-select-standard-label">
+            {" "}
+            Selecciona EPS
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            {...register("eps")}
+            label="EPS"
+          >
+            <MenuItem value="tf">Nueva EPS</MenuItem>
+            <MenuItem value="ps">E.P.S SANITAS</MenuItem>
+            <MenuItem value="ae">E.P.S SURA</MenuItem>
+            <MenuItem value="cd">SALUD TOTAL</MenuItem>
+          </Select>
+          <FormHelperText>{errors["eps"]?.message}</FormHelperText>
+        </FormControl>
+
+        {/*  <TextField
           id="outlined-basic"
           label="EPS"
           variant="outlined"
@@ -164,7 +235,7 @@ const CreateContract = (props) => {
           helperText={errors["eps"]?.message}
           required
           {...register("eps")}
-        />
+        /> */}
         <StyledTwoColumns disabledTransition>
           <StyledDate>
             <TextField
