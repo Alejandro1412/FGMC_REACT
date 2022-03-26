@@ -65,6 +65,17 @@ const CreateContract = (props) => {
       <h2 className="text-center font-bold text-2xl"> Crear contrato </h2>
 
       <StyledForm>
+        <TextField
+          id="outlined-basic"
+          label="Nombre del empleado"
+          variant="standard"
+          className="block w-full"
+          type="text"
+          error={errors["nombreEmpleado"]?.message}
+          helperText={errors["nombreEmpleado"]?.message}
+          required
+          {...register("nombreEmpleado")}
+        />
         <FormControl
           variant="standard"
           fullWidth
@@ -134,7 +145,6 @@ const CreateContract = (props) => {
         </StyledTwoColumns>
 
         <StyledTwoColumns>
-
           <FormControl
             variant="standard"
             fullWidth
@@ -155,7 +165,9 @@ const CreateContract = (props) => {
               <MenuItem value="ae">Comfenalco</MenuItem>
               <MenuItem value="cd">Camacol</MenuItem>
             </Select>
-            <FormHelperText>{errors["CajaCompensacion"]?.message}</FormHelperText>
+            <FormHelperText>
+              {errors["CajaCompensacion"]?.message}
+            </FormHelperText>
           </FormControl>
 
           {/* <TextField
@@ -188,7 +200,9 @@ const CreateContract = (props) => {
               <MenuItem value="ae">Proteccion</MenuItem>
               <MenuItem value="cd">Comfenalco</MenuItem>
             </Select>
-            <FormHelperText>{errors["afp_FondoPensiones"]?.message}</FormHelperText>
+            <FormHelperText>
+              {errors["afp_FondoPensiones"]?.message}
+            </FormHelperText>
           </FormControl>
           {/*    <TextField
             id="outlined-basic"
@@ -200,7 +214,6 @@ const CreateContract = (props) => {
             required
             {...register("afp_FondoPensiones")}
           /> */}
-
         </StyledTwoColumns>
 
         <FormControl

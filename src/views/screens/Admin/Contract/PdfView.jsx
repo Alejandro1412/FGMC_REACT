@@ -86,7 +86,7 @@ const PdfView = (props) => {
           </View>
           <View style={styles.sectionTwoColumns}>
             <Text>NOMBRE DEL TRABAJADOR:</Text>
-            <Text>JULIAN RUIZ RUIZ</Text>
+            <Text>{data.nombreEmpleado}</Text>
           </View>
           <View style={styles.sectionTwoColumns}>
             <Text>DIRECCIÓN TRABAJADOR:</Text>
@@ -400,7 +400,7 @@ const PdfView = (props) => {
           </View>
           <View style={styles.sectionTwoColumns}>
             <Text>LUIS ARMANDO ORTIZ ARGOTE</Text>
-            <Text>JULIAN RUIZ RUIZ</Text>
+            <Text>{data.nombreEmpleado}</Text>
           </View>
           <View style={styles.sectionTwoColumns}>
             <Text>REPRESENTANTE LEGAL</Text>

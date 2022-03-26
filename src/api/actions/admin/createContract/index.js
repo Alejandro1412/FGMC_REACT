@@ -14,6 +14,7 @@ const useContractsActions = () => {
   const actCreateContract =
     (
       {
+        nombreEmpleado,
         nombreContrato,
         lugarExpedicion,
         fechaNacimiento,
@@ -39,6 +40,7 @@ const useContractsActions = () => {
     async (dispatch) => {
       try {
         const res = await createContract({
+          nombreEmpleado,
           nombreContrato,
           lugarExpedicion,
           fechaNacimiento,

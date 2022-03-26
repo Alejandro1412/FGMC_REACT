@@ -128,6 +128,7 @@ const useContracts = ({ screenActive = 0, handleChangeScreen }) => {
   const { getYearMonthDayFromDate } = useQuickFunctions();
 
   const schemaArtistPartner = yup.object({
+    nombreEmpleado: yup.string().nullable().required(REQUIRED_FIELD),
     nombreContrato: yup.string().nullable().required(REQUIRED_FIELD),
     lugarExpedicion: yup.string().nullable().required(REQUIRED_FIELD),
     fechaNacimiento: yup.string().nullable().required(REQUIRED_FIELD),

@@ -3,6 +3,7 @@ import { trackPromise } from "react-promise-tracker";
 
 const useContractsProviders = () => {
   const createContract = ({
+    nombreEmpleado,
     nombreContrato,
     lugarExpedicion,
     fechaNacimiento,
@@ -26,6 +27,7 @@ const useContractsProviders = () => {
       method: "POST",
       url: "/contrato",
       data: {
+        nombreEmpleado,
         nombreContrato,
         lugarExpedicion,
         fechaNacimiento,
